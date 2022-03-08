@@ -1,8 +1,4 @@
 import 'package:ar_indoor_nav_admin/route.dart';
-import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
-import 'package:ar_indoor_nav_admin/screens/building_list.dart';
-import 'package:ar_indoor_nav_admin/screens/category_list.dart';
-import 'package:ar_indoor_nav_admin/screens/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {

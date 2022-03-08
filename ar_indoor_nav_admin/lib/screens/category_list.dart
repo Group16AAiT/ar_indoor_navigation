@@ -1,4 +1,3 @@
-import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
 import 'package:ar_indoor_nav_admin/screens/category.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +34,7 @@ class CategoryList extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                     onPressed: () {},
                     label: Container(
                       margin: const EdgeInsets.symmetric(
@@ -50,9 +49,9 @@ class CategoryList extends StatelessWidget {
                     ),
                     // textColor: Colors.white,
                     style: TextButton.styleFrom(
-                      primary: Color(0xFFF9C35C),
+                      primary: const Color(0xFFF9C35C),
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(
+                          side: const BorderSide(
                               color: Color(0xFFF9C35C),
                               width: 1,
                               style: BorderStyle.solid),
@@ -60,14 +59,12 @@ class CategoryList extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 24,
-                ),
-                Category(),
-                Category(),
-                Category(),
-                Category(),
-                Category()
+                const SizedBox(height: 24),
+                const Category(),
+                const Category(),
+                const Category(),
+                const Category(),
+                const Category()
               ],
             ),
           ),

@@ -21,9 +21,7 @@ class _RoomEditState extends State<RoomEdit> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 80,
-              ),
+              const SizedBox(height: 80),
               const Text(
                 "Room #112A",
                 style: TextStyle(
@@ -32,14 +30,13 @@ class _RoomEditState extends State<RoomEdit> {
                   fontSize: 36,
                 ),
               ),
-              SizedBox(height: 18),
+              const SizedBox(height: 18),
               Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
                   onPressed: () {
                     setState(() {
                       isOccupied = !isOccupied;
-                      print("HIyooo");
                     });
                   },
                   child: Padding(
@@ -49,7 +46,7 @@ class _RoomEditState extends State<RoomEdit> {
                       isOccupied
                           ? 'Make room unoccupied'
                           : "Make room occupied",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
@@ -58,32 +55,32 @@ class _RoomEditState extends State<RoomEdit> {
                   // textColor: Colors.white,
                   style: TextButton.styleFrom(
                     // primary: Color(0xFFF9C35C),
-                    primary: isOccupied ? Color(0xFFD84B4B) : Color(0xFFF9C35C),
+                    primary: isOccupied
+                        ? const Color(0xFFD84B4B)
+                        : const Color(0xFFF9C35C),
                     shape: RoundedRectangleBorder(
                         side: BorderSide(
                             color: isOccupied
-                                ? Color(0xFFD84B4B)
-                                : Color(0xFFF9C35C),
+                                ? const Color(0xFFD84B4B)
+                                : const Color(0xFFF9C35C),
                             width: 1,
                             style: BorderStyle.solid),
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),
-              SizedBox(height: 36),
+              const SizedBox(height: 36),
               Container(
                 height: 360,
-                color: Color(0x1AC4C4C4),
+                color: const Color(0x1AC4C4C4),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 22),
                   child: Column(children: [
-                    SizedBox(
-                      height: 22,
-                    ),
+                    const SizedBox(height: 22),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Room #1223",
                           style: TextStyle(
                             color: Colors.white,
@@ -94,28 +91,25 @@ class _RoomEditState extends State<RoomEdit> {
                         OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             backgroundColor: isOccupied
-                                ? Color(0x408A77FF)
-                                : Color(0x40F9C35C),
+                                ? const Color(0x408A77FF)
+                                : const Color(0x40F9C35C),
                           ),
                           child: Text(
                             isOccupied ? "occupied" : "unoccupied",
                             style: TextStyle(
                                 color: isOccupied
-                                    ? Color(0xFFB4ADFF)
-                                    : Color(0xFFF9C35C)),
+                                    ? const Color(0xFFB4ADFF)
+                                    : const Color(0xFFF9C35C)),
                           ),
                           onPressed: () {
                             setState(() {
                               isOccupied = !isOccupied;
-                              print("HI");
                             });
                           },
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 24,
-                    ),
+                    const SizedBox(height: 24),
                     Form(
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -141,9 +135,10 @@ class _RoomEditState extends State<RoomEdit> {
                             ),
                             const SizedBox(height: 8),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               decoration: BoxDecoration(
-                                color: Color(0x1AC4C4C4),
+                                color: const Color(0x1AC4C4C4),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: TextFormField(
@@ -154,13 +149,11 @@ class _RoomEditState extends State<RoomEdit> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 14,
-                            ),
-                            Align(
+                            const SizedBox(height: 14),
+                            const Align(
                               alignment: Alignment.topLeft,
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 5.0),
+                                padding: EdgeInsets.only(left: 5.0),
                                 child: Text(
                                   "Room Category",
                                   style: TextStyle(
@@ -173,9 +166,10 @@ class _RoomEditState extends State<RoomEdit> {
                             ),
                             const SizedBox(height: 8),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               decoration: BoxDecoration(
-                                color: Color(0x1AC4C4C4),
+                                color: const Color(0x1AC4C4C4),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: TextFormField(
@@ -188,16 +182,14 @@ class _RoomEditState extends State<RoomEdit> {
                             ),
                           ]),
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
+                    const SizedBox(height: 40),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           primary: const Color(0xFFF9C35C),
                           // fixedSize: Size(243, 41),
-                          fixedSize: Size(200, 34),
+                          fixedSize: const Size(200, 34),
                         ),
                         onPressed: () {
                           // Navigator.push(

@@ -16,31 +16,27 @@ class LoginPage extends StatelessWidget {
           padding: const EdgeInsets.all(32.0),
           child: ListView(children: [
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             const Image(
               image: AssetImage("assets/images/LockIcon.png"),
             ),
             const SizedBox(
-              height: 10,
+              height: 8,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                // horizontal: MediaQuery.of(context).size.width * 0.08,
+              padding: const EdgeInsets.symmetric(
                 horizontal: 10,
               ),
               child: Text(
                 "Welcome",
                 style: Theme.of(context).textTheme.headline1?.copyWith(
-                      // fontSize: screenHeight * 0.05,
                       fontSize: 36,
                       color: Colors.white,
                     ),
               ),
             ),
-            SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             Form(
               child:
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -55,18 +51,17 @@ class LoginPage extends StatelessWidget {
                             fontSize: 14,
                             color: Colors.white,
                             fontFamily: 'Poppins Medium',
+                            fontWeight: FontWeight.bold,
                           ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 3,
-                ),
+                const SizedBox(height: 8),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Color(0x1AC4C4C4),
-                    borderRadius: BorderRadius.circular(20),
+                    color: const Color(0x1AC4C4C4),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: TextFormField(
                     initialValue: '',
@@ -76,32 +71,27 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
+                const SizedBox(height: 14),
+                const Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
+                    padding: EdgeInsets.only(left: 5.0),
                     child: Text(
                       "Password",
-                      style: Theme.of(context).textTheme.headline2?.copyWith(
-                            // fontSize: screenHeight * 0.021,
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontFamily: 'Poppins Medium',
-                          ),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 3,
-                ),
+                const SizedBox(height: 8),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Color(0x1AC4C4C4),
-                    borderRadius: BorderRadius.circular(20),
+                    color: const Color(0x1AC4C4C4),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: TextFormField(
                     initialValue: '',
@@ -113,22 +103,15 @@ class LoginPage extends StatelessWidget {
                 ),
               ]),
             ),
-            SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFFF9C35C),
-                  fixedSize: Size(243, 41),
+                  fixedSize: const Size(243, 41),
                 ),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const BuildingList()),
-                  // );
                   Navigator.of(context).pushNamed(BuildingList.routeName);
                 },
                 child: const Text(

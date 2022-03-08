@@ -8,7 +8,7 @@ class BuildingList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    // final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color(0xFF1A1820),
       body: SafeArea(
@@ -45,9 +45,9 @@ class BuildingList extends StatelessWidget {
                         CategoryList.routeName,
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                       child: Text(
                         'Manage Categories',
                         style: TextStyle(
@@ -58,9 +58,9 @@ class BuildingList extends StatelessWidget {
                     ),
                     // textColor: Colors.white,
                     style: TextButton.styleFrom(
-                      primary: Color(0xFFF9C35C),
+                      primary: const Color(0xFFF9C35C),
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(
+                          side: const BorderSide(
                               color: Color(0xFFF9C35C),
                               width: 1,
                               style: BorderStyle.solid),
@@ -68,12 +68,10 @@ class BuildingList extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 32,
-                ),
-                BuildingRow(),
-                BuildingRow(),
-                BuildingRow(),
+                const SizedBox(height: 32),
+                const BuildingRow(),
+                const BuildingRow(),
+                const BuildingRow(),
               ],
             )
           ]),
@@ -94,13 +92,13 @@ class _BuildingRowState extends State<BuildingRow> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 14),
+      margin: const EdgeInsets.symmetric(vertical: 14),
       color: Colors.amber,
       // height: 76,
       child: ListTile(
-        title: Text("Building #1"),
-        subtitle: Text("Location"),
-        trailing: Icon(Icons.arrow_forward_sharp),
+        title: const Text("Building #1"),
+        subtitle: const Text("Location"),
+        trailing: const Icon(Icons.arrow_forward_sharp),
         onLongPress: () {},
         onTap: () {
           // Navigator.push(

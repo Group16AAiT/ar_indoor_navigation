@@ -10,24 +10,28 @@ class PageRouter {
     switch (settings.name) {
       case "/":
         return MaterialPageRoute(builder: (context) {
-          return LoginPage();
+          return const LoginPage();
         });
       case CategoryList.routeName:
         return MaterialPageRoute(builder: (context) {
           // String email = settings.arguments as String;
-          return CategoryList();
+          return const CategoryList();
         });
       case BuildingList.routeName:
         return MaterialPageRoute(builder: (context) {
-          return BuildingList();
+          return const BuildingList();
         });
       case BuildingDetail.routeName:
         return MaterialPageRoute(builder: (context) {
-          return BuildingDetail();
+          return const BuildingDetail();
         });
       case RoomEdit.routeName:
         return MaterialPageRoute(builder: (context) {
-          return RoomEdit();
+          return const RoomEdit();
+        });
+      default:
+        return MaterialPageRoute(builder: (context) {
+          return const LoginPage();
         });
     }
   }

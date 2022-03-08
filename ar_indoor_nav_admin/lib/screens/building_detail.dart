@@ -14,11 +14,9 @@ class BuildingDetail extends StatelessWidget {
           padding: const EdgeInsets.all(32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 80,
-              ),
-              const Text(
+            children: const [
+              SizedBox(height: 80),
+              Text(
                 "Building #1",
                 style: TextStyle(
                   color: Colors.white,
@@ -51,11 +49,11 @@ class _RoomRowState extends State<RoomRow> {
   Widget build(BuildContext context) {
     return Container(
       height: 64,
-      margin: EdgeInsets.symmetric(vertical: 14),
-      color: Color(0x1AC4C4C4),
+      margin: const EdgeInsets.symmetric(vertical: 14),
+      color: const Color(0x1AC4C4C4),
       // height: 76,
       child: ListTile(
-        title: Text(
+        title: const Text(
           "Room name",
           style: TextStyle(
             color: Colors.white,
@@ -63,7 +61,7 @@ class _RoomRowState extends State<RoomRow> {
             fontSize: 12,
           ),
         ),
-        subtitle: Text(
+        subtitle: const Text(
           "Room #122",
           style: TextStyle(
             color: Colors.white,
@@ -73,12 +71,15 @@ class _RoomRowState extends State<RoomRow> {
         ),
         trailing: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: isOccupied ? Color(0x408A77FF) : Color(0x40F9C35C),
+            primary:
+                isOccupied ? const Color(0x408A77FF) : const Color(0x40F9C35C),
           ),
           child: Text(
             isOccupied ? "occupied" : "unoccupied",
             style: TextStyle(
-                color: isOccupied ? Color(0xFFB4ADFF) : Color(0xFFF9C35C)),
+                color: isOccupied
+                    ? const Color(0xFFB4ADFF)
+                    : const Color(0xFFF9C35C)),
           ),
           onPressed: () {
             setState(() {
