@@ -1,3 +1,8 @@
+import 'package:ar_indoor_nav_admin/route.dart';
+import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
+import 'package:ar_indoor_nav_admin/screens/building_list.dart';
+import 'package:ar_indoor_nav_admin/screens/category_list.dart';
+import 'package:ar_indoor_nav_admin/screens/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,22 +29,18 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const LoginPage(),
+      // home: const BuildingList(),
+      // home: const CategoryList(),
+      initialRoute: "/",
+      onGenerateRoute: PageRouter.generateRoute,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
