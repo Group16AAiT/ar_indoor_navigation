@@ -89,15 +89,9 @@ class _RoomRowState extends State<RoomRow> {
         ),
         onLongPress: () {},
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const RoomEdit()),
-          // );
-          // Navigator.pushNamed(context, routeName, arguments: );
           Navigator.of(context).pushNamed(RoomEdit.routeName);
         },
       ),
-      // child: Text("JIH"),
     );
   }
 }

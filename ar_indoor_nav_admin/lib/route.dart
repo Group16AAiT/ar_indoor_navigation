@@ -1,5 +1,6 @@
 import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
 import 'package:ar_indoor_nav_admin/screens/building_list.dart';
+import 'package:ar_indoor_nav_admin/screens/category_add.dart';
 import 'package:ar_indoor_nav_admin/screens/category_list.dart';
 import 'package:ar_indoor_nav_admin/screens/login.dart';
 import 'package:ar_indoor_nav_admin/screens/room_edit.dart';
@@ -16,6 +17,10 @@ class PageRouter {
         return MaterialPageRoute(builder: (context) {
           // String email = settings.arguments as String;
           return const CategoryList();
+        });
+      case CategoryAdd.routeName:
+        return MaterialPageRoute(builder: (context) {
+          return const CategoryAdd();
         });
       case BuildingList.routeName:
         return MaterialPageRoute(builder: (context) {

@@ -1,4 +1,5 @@
 import 'package:ar_indoor_nav_admin/screens/category.dart';
+import 'package:ar_indoor_nav_admin/screens/category_add.dart';
 import 'package:flutter/material.dart';
 
 class CategoryList extends StatelessWidget {
@@ -35,7 +36,11 @@ class CategoryList extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
                     icon: const Icon(Icons.add),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        CategoryAdd.routeName,
+                      );
+                    },
                     label: Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 10),

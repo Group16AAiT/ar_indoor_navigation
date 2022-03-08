@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-class RoomEdit extends StatefulWidget {
-  static const routeName = '/roomEdit';
-  const RoomEdit({Key? key}) : super(key: key);
+class CategoryAdd extends StatefulWidget {
+  static const routeName = '/categoryAdd';
+  const CategoryAdd({Key? key}) : super(key: key);
 
   @override
-  State<RoomEdit> createState() => _RoomEditState();
+  State<CategoryAdd> createState() => _CategoryAddState();
 }
 
-class _RoomEditState extends State<RoomEdit> {
-  bool isOccupied = false;
-
+class _CategoryAddState extends State<CategoryAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +21,7 @@ class _RoomEditState extends State<RoomEdit> {
             children: [
               const SizedBox(height: 80),
               const Text(
-                "Room #112A",
+                "Add Category",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
@@ -31,44 +29,6 @@ class _RoomEditState extends State<RoomEdit> {
                 ),
               ),
               const SizedBox(height: 18),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      isOccupied = !isOccupied;
-                    });
-                  },
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    child: Text(
-                      isOccupied
-                          ? 'Make room unoccupied'
-                          : "Make room occupied",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  // textColor: Colors.white,
-                  style: TextButton.styleFrom(
-                    // primary: Color(0xFFF9C35C),
-                    primary: isOccupied
-                        ? const Color(0xFFD84B4B)
-                        : const Color(0xFFF9C35C),
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: isOccupied
-                                ? const Color(0xFFD84B4B)
-                                : const Color(0xFFF9C35C),
-                            width: 1,
-                            style: BorderStyle.solid),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
-              ),
               const SizedBox(height: 36),
               Container(
                 height: 360,
@@ -79,33 +39,14 @@ class _RoomEditState extends State<RoomEdit> {
                     const SizedBox(height: 22),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Room #1223",
+                      children: const [
+                        Text(
+                          "Enter category Info",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: isOccupied
-                                ? const Color(0x408A77FF)
-                                : const Color(0x40F9C35C),
-                          ),
-                          child: Text(
-                            isOccupied ? "occupied" : "unoccupied",
-                            style: TextStyle(
-                                color: isOccupied
-                                    ? const Color(0xFFB4ADFF)
-                                    : const Color(0xFFF9C35C)),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isOccupied = !isOccupied;
-                            });
-                          },
                         ),
                       ],
                     ),
@@ -119,7 +60,7 @@ class _RoomEditState extends State<RoomEdit> {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 5.0),
                                 child: Text(
-                                  "Room Name",
+                                  "Category Name",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2
@@ -155,7 +96,7 @@ class _RoomEditState extends State<RoomEdit> {
                               child: Padding(
                                 padding: EdgeInsets.only(left: 5.0),
                                 child: Text(
-                                  "Room Category",
+                                  "Category Detail",
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -182,7 +123,7 @@ class _RoomEditState extends State<RoomEdit> {
                             ),
                           ]),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 32),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: ElevatedButton(
@@ -191,11 +132,9 @@ class _RoomEditState extends State<RoomEdit> {
                           // fixedSize: Size(243, 41),
                           fixedSize: const Size(200, 34),
                         ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                        onPressed: () {},
                         child: const Text(
-                          "Save Changes",
+                          "Add Category",
                           style: TextStyle(
                             color: Color(0xFF1A1820),
                             fontSize: 14,

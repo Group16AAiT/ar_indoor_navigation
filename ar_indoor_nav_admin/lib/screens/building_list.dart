@@ -36,11 +36,6 @@ class BuildingList extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const CategoryList()),
-                      // );
                       Navigator.of(context).pushNamed(
                         CategoryList.routeName,
                       );
@@ -93,18 +88,32 @@ class _BuildingRowState extends State<BuildingRow> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 14),
-      color: Colors.amber,
+      // color: Colors.amber,
+      color: const Color(0x1AC4C4C4),
       // height: 76,
       child: ListTile(
-        title: const Text("Building #1"),
-        subtitle: const Text("Location"),
-        trailing: const Icon(Icons.arrow_forward_sharp),
+        title: const Text(
+          "Building #1",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 18,
+          ),
+        ),
+        subtitle: const Text(
+          "Location",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 13,
+          ),
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_sharp,
+          color: Colors.white,
+        ),
         onLongPress: () {},
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const BuildingDetail()),
-          // );
           Navigator.of(context).pushNamed(
             BuildingDetail.routeName,
           );
