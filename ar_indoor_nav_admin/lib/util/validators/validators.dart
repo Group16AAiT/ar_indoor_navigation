@@ -16,7 +16,7 @@ class Validators {
       return 'Name is required! Can\'t be null';
     }
 
-    return !checkRegex(NAME_REGEX, name) ? "Invalid email address." : null;
+    return !checkRegex(NAME_REGEX, name) ? "Invalid name." : null;
   }
 
   static String? validateEmail(String? email) {

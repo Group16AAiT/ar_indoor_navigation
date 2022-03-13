@@ -1,3 +1,4 @@
+import 'package:ar_indoor_nav_admin/screens/add_admin.dart';
 import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
 import 'package:ar_indoor_nav_admin/screens/category_list.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,8 @@ class BuildingList extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
-          child: Column(children: [
-            Column(
+          child: SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(
@@ -32,44 +33,77 @@ class BuildingList extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        CategoryList.routeName,
-                      );
-                    },
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      child: Text(
-                        'Manage Categories',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          CategoryList.routeName,
+                        );
+                      },
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        child: Text(
+                          'Manage Categories',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      // textColor: Colors.white,
+                      style: TextButton.styleFrom(
+                        primary: const Color(0xFFF9C35C),
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                color: Color(0xFFF9C35C),
+                                width: 1,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            AddAdminPage.routeName,
+                          );
+                        },
+                        child: const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          child: Text(
+                            'Add Admin',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        // textColor: Colors.white,
+                        style: TextButton.styleFrom(
+                          primary: const Color(0xFFF9C35C),
+                          shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  color: Color(0xFFF9C35C),
+                                  width: 1,
+                                  style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                     ),
-                    // textColor: Colors.white,
-                    style: TextButton.styleFrom(
-                      primary: const Color(0xFFF9C35C),
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              color: Color(0xFFF9C35C),
-                              width: 1,
-                              style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
+                  ],
                 ),
                 const SizedBox(height: 32),
                 const BuildingRow(),
                 const BuildingRow(),
                 const BuildingRow(),
               ],
-            )
-          ]),
+            ),
+          ),
         ),
       ),
     );

@@ -14,7 +14,7 @@ class AccountRepository {
     String token = await remoteDataProvider.signUpAdmin(
         name: name, email: email, password: password);
 
-    return _saveToken(token);
+    // return _saveToken(token); // since only registering new admin not signing in with the account
   }
 
   Future<void> login(String email, String password) async {
