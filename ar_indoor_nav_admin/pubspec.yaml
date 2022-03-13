@@ -45,6 +45,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  http: any
+  shared_preferences: any
+  flutter_bloc: 7.2.0
+  # flutter_secure_storage: 4.2.1
+  flutter_secure_storage: ^5.0.2
+  equatable: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
