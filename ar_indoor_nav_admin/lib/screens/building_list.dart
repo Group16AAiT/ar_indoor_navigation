@@ -1,7 +1,10 @@
+import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
+import 'package:ar_indoor_nav_admin/data/building/model/building.dart';
 import 'package:ar_indoor_nav_admin/screens/add_admin.dart';
 import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
 import 'package:ar_indoor_nav_admin/screens/category_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuildingList extends StatelessWidget {
   static const routeName = "/buildingList";
@@ -15,38 +18,67 @@ class BuildingList extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(
-                  height: 94,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(
+                height: 94,
+              ),
+              const Text(
+                "Buildings",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 36,
                 ),
-                const Text(
-                  "Buildings",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 36,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        CategoryList.routeName,
+                      );
+                    },
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      child: Text(
+                        'Manage Categories',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    // textColor: Colors.white,
+                    style: TextButton.styleFrom(
+                      primary: const Color(0xFFF9C35C),
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                              color: Color(0xFFF9C35C),
+                              width: 1,
+                              style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                    child: TextButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(
-                          CategoryList.routeName,
+                          AddAdminPage.routeName,
                         );
                       },
                       child: const Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         child: Text(
-                          'Manage Categories',
+                          'Add Admin',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -64,45 +96,86 @@ class BuildingList extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                            AddAdminPage.routeName,
-                          );
-                        },
-                        child: const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                          child: Text(
-                            'Add Admin',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              // const BuildingRow(),
+              // const BuildingRow(),
+              // const BuildingRow(),
+
+              BlocBuilder<BldgBloc, BldgState>(
+                builder: (context, state) {
+                  if (state is BldgLoadingState) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                        child: SizedBox(
+                          height: 30,
+                          // width: 30,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
                             ),
                           ),
                         ),
-                        // textColor: Colors.white,
-                        style: TextButton.styleFrom(
+                      ),
+                    );
+                  } else if (state is AllBldgLoadedState) {
+                    final allFetchedBldgs = state.fetchedbldgs;
+                    return Flexible(
+                      child: ListView.builder(
+                          itemCount: allFetchedBldgs.length,
+                          itemBuilder: (context, index) {
+                            final currBldg = allFetchedBldgs[index];
+                            return BuildingRow(
+                              building: currBldg,
+                            );
+                          }),
+                    );
+                  } else if (state is ErrorBldgState) {
+                    return Text(
+                      "Errorrr happened ${state.message}",
+                      style: const TextStyle(color: Colors.white),
+                    );
+                  } else if (state is InitialBldgState) {
+                    BlocProvider.of<BldgBloc>(context)
+                        .add(const GetBuildings());
+                  }
+                  // InitialBldgState
+                  // BldgDetailsLoadedState
+                  // BlocProvider.of<BldgBloc>(context).add(const GetBuildings());
+                  return const Text("");
+                },
+              ),
+
+              BlocBuilder<BldgBloc, BldgState>(
+                builder: (context, state) {
+                  if (state is ErrorBldgState) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
                           primary: const Color(0xFFF9C35C),
-                          shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  color: Color(0xFFF9C35C),
-                                  width: 1,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(10)),
+                          fixedSize: const Size(243, 41),
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<BldgBloc>(context)
+                              .add(const GetBuildings());
+                        },
+                        child: const Text(
+                          "Try again",
+                          style: TextStyle(
+                            color: Color(0xFF1A1820),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-                const BuildingRow(),
-                const BuildingRow(),
-                const BuildingRow(),
-              ],
-            ),
+                    );
+                  }
+                  return const Text("");
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -111,7 +184,8 @@ class BuildingList extends StatelessWidget {
 }
 
 class BuildingRow extends StatefulWidget {
-  const BuildingRow({Key? key}) : super(key: key);
+  final Building building;
+  const BuildingRow({Key? key, required this.building}) : super(key: key);
 
   @override
   State<BuildingRow> createState() => _BuildingRowState();
@@ -126,17 +200,19 @@ class _BuildingRowState extends State<BuildingRow> {
       color: const Color(0x1AC4C4C4),
       // height: 76,
       child: ListTile(
-        title: const Text(
-          "Building #1",
-          style: TextStyle(
+        title: Text(
+          // "Building #1",
+          "${widget.building.name}",
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 18,
           ),
         ),
-        subtitle: const Text(
-          "Location",
-          style: TextStyle(
+        subtitle: Text(
+          // "Location",
+          "${widget.building.location}",
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 13,
@@ -148,6 +224,9 @@ class _BuildingRowState extends State<BuildingRow> {
         ),
         onLongPress: () {},
         onTap: () {
+          BlocProvider.of<BldgBloc>(context)
+              .add(GetBuildingDetails(id: widget.building.id));
+
           Navigator.of(context).pushNamed(
             BuildingDetail.routeName,
           );

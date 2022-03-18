@@ -1,5 +1,7 @@
+import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
 import 'package:ar_indoor_nav_admin/screens/room_edit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuildingDetail extends StatelessWidget {
   static const routeName = "/buildingDetail";
@@ -7,27 +9,53 @@ class BuildingDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1820),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(height: 80),
-              Text(
-                "Building #1",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 36,
+    return WillPopScope(
+      onWillPop: () async {
+        BlocProvider.of<BldgBloc>(context).add(const GetBuildings());
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFF1A1820),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 80),
+                BlocBuilder<BldgBloc, BldgState>(
+                  builder: (context, state) {
+                    if (state is BldgDetailsLoadedState) {
+                      return Text(
+                        "Building # {${state.fetchedbldg.name}}",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 36,
+                        ),
+                      );
+                    } else if (state is ErrorBldgState) {
+                      return const Text(
+                        "error loading detailss ? ",
+                        style: TextStyle(color: Colors.white),
+                      );
+                    } else if (state is BldgLoadingState) {
+                      return const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.white,
+                        ),
+                      );
+                    }
+                    // InitialBldgState
+                    return const Text("HI",
+                        style: TextStyle(color: Colors.white));
+                  },
                 ),
-              ),
-              RoomRow(),
-              RoomRow(),
-              RoomRow(),
-            ],
+                const RoomRow(),
+                const RoomRow(),
+                const RoomRow(),
+              ],
+            ),
           ),
         ),
       ),
