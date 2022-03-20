@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const bcrypt = require('bcryptjs')
 const user = require('../controllers/user_controller')
+const categories = require('../controllers/categoriesController')
 const building_controller = require('../controllers/buildingsController');
 
 
@@ -19,6 +20,16 @@ router.route('/buildings')
 router.route('/buildings/:id')
 .get(building_controller.view);
 
+
+
+router.route('/categories')
+.get(categories.index)
+.post(categories.new);
+
+router.route('/categories/:id')
+      .get(categories.view)
+      .put(categories.update)
+      .delete(categories.delete);
 
 
 
