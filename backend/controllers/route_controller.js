@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const bcrypt = require('bcryptjs')
 const user = require('../controllers/user_controller')
+const room = require('../controllers/roomController')
 const categories = require('../controllers/categoriesController')
 const building_controller = require('../controllers/buildingsController');
 
@@ -31,7 +32,13 @@ router.route('/categories/:id')
       .put(categories.update)
       .delete(categories.delete);
 
+router.route('/rooms')
+.get(room.index);
 
+router.route('/rooms/:id')
+.get(room.view)
+.put(room.update)
+.delete(room.delete);
 
 router.route('/users')
 .get(user.index);
