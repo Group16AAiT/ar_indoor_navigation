@@ -6,11 +6,21 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const bcrypt = require('bcryptjs')
 const user = require('../controllers/user_controller')
+const building_controller = require('../controllers/buildingsController');
 
 
 router.get('/', (req, res) => {
     res.send("Hey")
 })
+
+router.route('/buildings')
+         .get(building_controller.index);
+
+router.route('/buildings/:id')
+.get(building_controller.view);
+
+
+
 
 router.route('/users')
 .get(user.index);
