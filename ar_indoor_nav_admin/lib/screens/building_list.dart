@@ -41,7 +41,7 @@ class BuildingList extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(
-                        CategoryList.routeName,
+                        CategoriesList.routeName,
                       );
                     },
                     child: const Padding(

@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ar_indoor_nav_admin/data/account/bloc/bloc.dart';
 import 'package:ar_indoor_nav_admin/data/account/data_provider/data_provider.dart';
 import 'package:ar_indoor_nav_admin/data/account/repository/account_repository.dart';
+import 'package:ar_indoor_nav_admin/data/categories/bloc/bloc.dart';
 import 'package:ar_indoor_nav_admin/util/storage/secure_storage.dart';
 import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
 import 'package:ar_indoor_nav_admin/screens/building_list.dart';
@@ -43,14 +44,34 @@ class PageRouter {
             },
           );
         });
-      case CategoryList.routeName:
+      case CategoriesList.routeName:
         return MaterialPageRoute(builder: (context) {
-          // String email = settings.arguments as String;
-          return const CategoryList();
+          return BlocBuilder<CategoriesBloc, CategoriesState>(
+              builder: (_, state) {
+            if (state is CategoriesLoadSuccess) {
+              return const CategoriesList();
+            }
+            // if (state is CategoriesOperationError) {
+            //   return const Text("data");
+            // }
+
+            return Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                  CircularProgressIndicator(
+                    backgroundColor: Color.fromARGB(255, 69, 65, 83),
+                    valueColor: AlwaysStoppedAnimation(
+                        Color.fromARGB(255, 184, 178, 167)),
+                    strokeWidth: 7,
+                  ),
+                ]));
+          });
         });
-      case CategoryAdd.routeName:
+
+      case AddCategory.routeName:
         return MaterialPageRoute(builder: (context) {
-          return const CategoryAdd();
+          return const AddCategory();
         });
       case BuildingList.routeName:
         return MaterialPageRoute(builder: (context) {

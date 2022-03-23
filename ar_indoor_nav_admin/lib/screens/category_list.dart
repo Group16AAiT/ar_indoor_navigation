@@ -2,15 +2,19 @@ import 'package:ar_indoor_nav_admin/screens/category.dart';
 import 'package:ar_indoor_nav_admin/screens/category_add.dart';
 import 'package:flutter/material.dart';
 
-class CategoryList extends StatelessWidget {
+class CategoriesList extends StatelessWidget {
   static const routeName = "/categories";
-  const CategoryList({Key? key}) : super(key: key);
+  const CategoriesList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color(0xFF1A1820),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xFF1A1820),
+      //   title: const Text(''),
+      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -38,7 +42,7 @@ class CategoryList extends StatelessWidget {
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       Navigator.of(context).pushNamed(
-                        CategoryAdd.routeName,
+                        AddCategory.routeName,
                       );
                     },
                     label: Container(
@@ -64,12 +68,13 @@ class CategoryList extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                const Category(),
-                const Category(),
-                const Category(),
-                const Category(),
-                const Category()
+                const SizedBox(height: 4),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 40),
+                  child: const Category(),
+                ),
+                // const SizedBox(height: 40),
+                // const Expanded(child: Category()),
               ],
             ),
           ),

@@ -9,6 +9,10 @@ import 'package:ar_indoor_nav_admin/util/storage/secure_storage.dart';
 import 'package:ar_indoor_nav_admin/data/account/account.dart';
 import 'package:ar_indoor_nav_admin/route.dart';
 
+import 'package:ar_indoor_nav_admin/data/categories/bloc/bloc.dart';
+import 'package:ar_indoor_nav_admin/data/categories/data_provider/category_data.dart';
+import 'package:ar_indoor_nav_admin/data/categories/repository/categories_repository.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -27,6 +31,8 @@ class MyApp extends StatelessWidget {
   final BuildingRepository buildingRepository = BuildingRepository(
     buildingDataProvider: BuildingDataProvider(httpClient: http.Client()),
   );
+  final CategoriesRepository categoriesRepository = CategoriesRepository(
+      dataProvider: CategoriesDataProvider(httpClient: http.Client()));
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +50,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => BldgBloc(buildingRepository: buildingRepository),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoriesBloc(categoriesRepository: categoriesRepository)
+                ..add(const CategoriesLoad()),
         ),
       ],
       child: MaterialApp(
