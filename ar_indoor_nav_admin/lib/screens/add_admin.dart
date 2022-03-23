@@ -209,7 +209,7 @@ class AddAdminPage extends StatelessWidget {
                   },
                   child: BlocBuilder<SignUpBloc, SignUpState>(
                     builder: (context, state) {
-                      if (state is LoggingInState) {
+                      if (state is SigningUpState) {
                         return const SizedBox(
                           height: 30,
                           width: 30,
