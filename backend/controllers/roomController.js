@@ -1,111 +1,137 @@
+var express = require('express');
+var router = express.Router();
 Rooms = require('../models/roomModel');
+Category = require('../models/categoriesModel');
 
-exports.index = (req, res) =>{
-    Rooms.get((err, room) =>{
-        if(err){
-            res.json({
-                status:'err',
-                code: 500,
-                message:err
-            });
-        }
-        res.json(room)
-    })
-}
-
-exports.new = function(req,res){
-    let room = new Rooms()
-    room.name = req.body.name
-    room.price = req.body.price
-    room.stock = req.body.stock
-    room.save(function(err){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-
-            })
-        }
-            
+router.get('/', async (req, res, next) => {
+    try {
+        const bldgId = req.body.bldgId;
+        var roomListRes = await Rooms.find({bldgId: bldgId});
         
-        else{
-            res.json({
-                status:'success',
-                code:200,
-                message:'Register save',
-                data:room
-            })
+        for (let i = 0; i < roomListRes.length; i++) {
+            element = roomListRes[i];
+            var fetchedCategory = await Category.findById(element["category"]);
+            roomListRes[i]["category"] = fetchedCategory;
         }
-
-    })
-}
-
-exports.view = function(req,res){
-    
-    Rooms.findById(req.params.id, function(err,room){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-            })
-        }
+        res.json(roomListRes);
+    } catch (e) {
+        // next(e);
         res.json({
-            status:'success',
-            code:200,
-            message:'Room Name',
-            data:room
+            status: 'err',
+            code: 500,
+            message: e
+        });
+    }
+});
+
+
+router.post('/', async (req, res, next) => {
+    try {
+        var fetchedCategory = await Category.findOne({name: req.body.categoryName});
+        const resCategory = fetchedCategory["_id"];
+        
+        let room = new Rooms({
+            roomName: req.body.roomName,
+            roomNumber: req.body.roomNumber,
+            floorNumber: req.body.floorNumber,
+            isEmpty: req.body.isEmpty,
+            category: resCategory,
+            bldgId: req.body.bldgId
+        })
+        await room.save()
+        res.json({
+            status: 'success',
+            code: 200,
+            message: 'Room added',
+            data: room
+        })
+    } catch (e) {
+        // next(e);
+        // console.log("errr " + e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+
+        })
+    }
+});
+
+
+router.get('/:id', async (req, res, next) => {
+    try {
+        var fetchedRoom = await Rooms.findById(req.params.id);
+        console.log("#a")
+        var fetchedCategory = await Category.findById(fetchedRoom["category"]);
+        console.log("#b")
+        fetchedRoom["category"] = fetchedCategory;
+        console.log("#c")
+        res.json({
+            status: 'success',
+            code: 200,
+            message: 'Room Name',
+            data: fetchedRoom
         })
 
-    })
-}
-
-exports.update = function(req, res){
-    Rooms.findById(req.params.id, function(err, room){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-            })}
-            room.name = req.body.name
-            room.price = req.body.price
-            room.stock = req.body.stock
-        room.save(function(err){
-            if(err){
-                res.json({
-                    status:'err',
-                    code:500,
-                    message:err
-                })}
-            res.json({
-                status:'success',
-                code:200,
-                message: "Room Name updated",
-                data :room
-            })
-            })
-    
-    
-})}
-
-exports.delete = function(req, res){
-    Rooms.remove({
-        _id:req.params.id
-    },function(err){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-            })
+    } catch (e) {
+        // next(e);
         res.json({
-            status:'success',
-            code:200,
+            status: 'err',
+            code: 500,
+            message: e
+
+        })
+    }
+});
+
+router.put('/:id', async (req, res, next) => {
+    try {
+        var fetchedRoom = await Rooms.findById(req.params.id);
+        fetchedRoom.roomName = req.body.name
+        if (req.body.isEmpty) {
+            fetchedRoom.isEmpty = req.body.isEmpty
+        }
+        if (req.body.category) {
+            fetchedRoom.category = req.body.category
+        }
+        await fetchedRoom.save();
+        res.json({
+            status: 'success',
+            code: 200,
+            message: "Room Name updated",
+            data: fetchedRoom
+        })
+
+    } catch (e) {
+        // next(e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+
+        })
+    }
+});
+
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        await Rooms.deleteOne({ _id: req.params.id });
+        res.json({
+            status: 'success',
+            code: 200,
             message: 'Room is Removed'
         })
-        }
+
+    } catch (e) {
+        // next(e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+        })
     }
-    )
-}
+});
+
+
+module.exports = router;

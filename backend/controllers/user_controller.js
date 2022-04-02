@@ -1,111 +1,79 @@
+var express = require('express');
+var router = express.Router();
 User = require('../models/userModel');
 
-exports.index = (req, res) =>{
-    User.get((err, user) =>{
-        if(err){
-            res.json({
-                status:'err',
-                code: 500,
-                message:err
-            });
-        }
-        res.json(user)
-    })
-}
-
-exports.new = function(req,res){
-    let user = new User()
-    user.name = req.body.name
-    user.price = req.body.price
-    user.stock = req.body.stock
-    user.save(function(err){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-
-            })
-        }
-            
-        
-        else{
-            res.json({
-                status:'success',
-                code:200,
-                message:'Register save',
-                data:user
-            })
-        }
-
-    })
-}
-
-exports.view = function(req,res){
-    
-    User.findById(req.params.id, function(err,user){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-            })
-        }
+router.get('/', async (req, res, next) => {
+    try {
+        var userListRes = await User.find({});
+        res.json(userListRes);
+    } catch (e) {
+        // next(e);
         res.json({
-            status:'success',
-            code:200,
-            message:'Room Name',
-            data:user
-        })
-
-    })
-}
-
-exports.update = function(req, res){
-    User.findById(req.params.id, function(err, user){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-            })}
-            user.name = req.body.name
-            user.price = req.body.price
-            user.stock = req.body.stock
-            user.save(function(err){
-            if(err){
-                res.json({
-                    status:'err',
-                    code:500,
-                    message:err
-                })}
-            res.json({
-                status:'success',
-                code:200,
-                message: "Room Name updated",
-                data :user
-            })
-            })
-    
-    
-})}
-
-exports.delete = function(req, res){
-    User.remove({
-        _id:req.params.id
-    },function(err){
-        if(err){
-            res.json({
-                status:'err',
-                code:500,
-                message:err
-            })
-        res.json({
-            status:'success',
-            code:200,
-            message: 'Room is Removed'
-        })
-        }
+            status: 'err',
+            code: 500,
+            message: e
+        });
     }
-    )
-}
+});
+
+router.get('/:id', async (req, res, next) => {
+    try {
+        var user = await User.findById(req.params.id);
+        res.json({
+            status: 'success',
+            code: 200,
+            message: 'Users List',
+            data: user
+        })
+    } catch (e) {
+        // next(e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+        });
+    }
+});
+
+router.put('/:id', async (req, res, next) => {
+    try {
+        var user = await User.findById(req.params.id);
+        user.name = req.body.name
+        await user.save();
+        res.json({
+            status: 'success',
+            code: 200,
+            message: "User updated",
+            data: user
+        })
+    } catch (e) {
+        // next(e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+        });
+    }
+});
+
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        await User.remove({ _id: req.params.id });
+        res.json({
+            status: 'success',
+            code: 200,
+            message: 'User is deleted'
+        })
+    } catch (e) {
+        // next(e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+        });
+    }
+});
+
+
+module.exports = router;
