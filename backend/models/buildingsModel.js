@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+let roomSchema = require('./roomModel');
 
 
 let buildingSchema = mongoose.Schema({
@@ -10,10 +11,12 @@ let buildingSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    rooms: {
+        type: [roomSchema.RoomSchema],
+    },
 });
 
-let building = module.exports = mongoose.model('Buildings', buildingSchema);
-module.exports.get = function (callback, limit) {
-    building.find(callback).limit(limit);
-}
+let building =  mongoose.model('Buildings', buildingSchema);
+module.exports.BuildingModel = building;
+module.exports.BuildingSchema = buildingSchema;

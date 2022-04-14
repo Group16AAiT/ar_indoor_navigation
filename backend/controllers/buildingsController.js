@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-Building = require('../models/buildingsModel');
+Building = require('../models/buildingsModel').BuildingModel;
+Rooms = require('../models/roomModel').RoomModel;
+authMiddleware = require('../middlewares/auth');
 
 
 router.get('/', async (req, res, next) => {
@@ -18,9 +20,21 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', authMiddleware.isAuthenticated , async (req, res, next) => {
     try {
-        var bldgRes = await Building.findById(req.params.id);
+        
+        const bldgId = req.params.id;
+        var bldgRes = await Building.findById(bldgId).lean();
+        
+        var roomListRes = await Rooms.find({bldgId: bldgId});
+        
+        for (let i = 0; i < roomListRes.length; i++) {
+            element = roomListRes[i];
+            var fetchedCategory = await Category.findById(element["category"]);
+            roomListRes[i]["category"] = fetchedCategory;
+        }
+        bldgRes.rooms = roomListRes;
+        
         res.json({
             status: 'success',
             code: 200,

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-Rooms = require('../models/roomModel');
+Rooms = require('../models/roomModel').RoomModel;
 Category = require('../models/categoriesModel');
 
 router.get('/', async (req, res, next) => {
@@ -61,11 +61,8 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         var fetchedRoom = await Rooms.findById(req.params.id);
-        console.log("#a")
         var fetchedCategory = await Category.findById(fetchedRoom["category"]);
-        console.log("#b")
         fetchedRoom["category"] = fetchedCategory;
-        console.log("#c")
         res.json({
             status: 'success',
             code: 200,

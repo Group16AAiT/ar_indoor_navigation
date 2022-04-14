@@ -24,4 +24,6 @@ const RoomSchema = new mongoose.Schema({
 // module.exports.get = function(callback ,limit){
 //     rooms.find(callback).limit(limit);
 // }
-module.exports = mongoose.model('Room', RoomSchema);
+let room = mongoose.model('Room', RoomSchema);
+module.exports.RoomModel = room;
+module.exports.RoomSchema = RoomSchema;
