@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.get('/:id', authMiddleware.isAuthenticated , async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         
         const bldgId = req.params.id;
