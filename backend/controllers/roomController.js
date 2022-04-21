@@ -84,19 +84,27 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
     try {
         var fetchedRoom = await Rooms.findById(req.params.id);
+        var returnedData = fetchedRoom.toObject();
         fetchedRoom.roomName = req.body.name
+        fetchedRoom.isEmpty = req.body.isEmpty
+        returnedData.isEmpty = req.body.isEmpty
         if (req.body.isEmpty) {
-            fetchedRoom.isEmpty = req.body.isEmpty
+            fetchedRoom.roomName = "NO NAME";
+            returnedData.roomName = "NO NAME";
         }
         if (req.body.category) {
-            fetchedRoom.category = req.body.category
+            var fetchedCategory = await Category.findOne({name: req.body.category});
+            fetchedRoom.category = fetchedCategory._id;
+            returnedData.category = fetchedCategory;
+        } else {
+            returnedData.category = {name: "NO CATEGORY", _id: "NOid", createdAt: Date.now()};
         }
-        await fetchedRoom.save();
+        await fetchedRoom.save();        
         res.json({
             status: 'success',
             code: 200,
             message: "Room Name updated",
-            data: fetchedRoom
+            data: returnedData
         })
 
     } catch (e) {
