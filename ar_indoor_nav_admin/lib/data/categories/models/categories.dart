@@ -24,6 +24,11 @@ class Category extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+      };
+
   @override
   String toString() => 'Categories { id: $id, name: $name }';
 }
