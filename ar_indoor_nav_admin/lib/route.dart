@@ -1,3 +1,4 @@
+import 'package:ar_indoor_nav_admin/util/room_edit_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -82,8 +83,9 @@ class PageRouter {
           return const BuildingDetail();
         });
       case RoomEdit.routeName:
+        final roomArg = settings.arguments as RoomEditArgument;
         return MaterialPageRoute(builder: (context) {
-          return const RoomEdit();
+          return RoomEdit(room: roomArg.room);
         });
       case AddAdminPage.routeName:
         return MaterialPageRoute(builder: (context) {

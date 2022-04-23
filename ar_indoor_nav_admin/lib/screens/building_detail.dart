@@ -1,5 +1,9 @@
+import 'package:ar_indoor_nav_admin/data/bldg_detail/bloc/bldg_detail_bloc.dart';
+import 'package:ar_indoor_nav_admin/data/bldg_detail/model/bldg_detail.dart';
 import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
+import 'package:ar_indoor_nav_admin/data/room/models/room.dart';
 import 'package:ar_indoor_nav_admin/screens/room_edit.dart';
+import 'package:ar_indoor_nav_admin/util/room_edit_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,23 +27,30 @@ class BuildingDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 80),
-                BlocBuilder<BldgBloc, BldgState>(
+                BlocBuilder<BldgDetailBloc, BldgDetailState>(
                   builder: (context, state) {
                     if (state is BldgDetailsLoadedState) {
-                      return Text(
-                        "Building # {${state.fetchedbldg.name}}",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 36,
-                        ),
+                      final BldgDetail allBldgDetails =
+                          state.fetchedBldgDetails;
+                      final List<Room> rooms = allBldgDetails.rooms;
+                      // return Text("found # ${rooms.length} amount of rooms");
+                      return Flexible(
+                        child: ListView.builder(
+                            itemCount: rooms.length,
+                            itemBuilder: (context, index) {
+                              final currRoom = rooms[index];
+                              return RoomRow(
+                                room: currRoom,
+                                isOccupied: !currRoom.isEmpty,
+                              );
+                            }),
                       );
-                    } else if (state is ErrorBldgState) {
+                    } else if (state is ErrorBldgDetailState) {
                       return const Text(
                         "error loading detailss ? ",
                         style: TextStyle(color: Colors.white),
                       );
-                    } else if (state is BldgLoadingState) {
+                    } else if (state is BldgDetailLoadingState) {
                       return const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
                           Colors.white,
@@ -51,9 +62,6 @@ class BuildingDetail extends StatelessWidget {
                         style: TextStyle(color: Colors.white));
                   },
                 ),
-                const RoomRow(),
-                const RoomRow(),
-                const RoomRow(),
               ],
             ),
           ),
@@ -64,14 +72,21 @@ class BuildingDetail extends StatelessWidget {
 }
 
 class RoomRow extends StatefulWidget {
-  const RoomRow({Key? key}) : super(key: key);
+  final Room room;
+  bool isOccupied;
+  RoomRow({
+    Key? key,
+    required this.room,
+    required this.isOccupied,
+  }) : super(key: key);
 
   @override
   State<RoomRow> createState() => _RoomRowState();
 }
 
 class _RoomRowState extends State<RoomRow> {
-  bool isOccupied = true;
+  // bool isOccupied = true;
+  // bool isOccupied = isOccupied;
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +96,17 @@ class _RoomRowState extends State<RoomRow> {
       color: const Color(0x1AC4C4C4),
       // height: 76,
       child: ListTile(
-        title: const Text(
-          "Room name",
-          style: TextStyle(
+        title: Text(
+          "Room name ${widget.room.roomName}",
+          style: const TextStyle(
             color: Colors.white,
             // fontWeight: FontWeight.w700,
             fontSize: 12,
           ),
         ),
-        subtitle: const Text(
-          "Room #122",
-          style: TextStyle(
+        subtitle: Text(
+          "Room #${widget.room.roomNumber}",
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 18,
@@ -99,25 +114,36 @@ class _RoomRowState extends State<RoomRow> {
         ),
         trailing: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary:
-                isOccupied ? const Color(0x408A77FF) : const Color(0x40F9C35C),
+            primary: widget.isOccupied
+                ? const Color(0x408A77FF)
+                : const Color(0x40F9C35C),
           ),
           child: Text(
-            isOccupied ? "occupied" : "unoccupied",
+            widget.isOccupied ? "occupied" : "unoccupied",
             style: TextStyle(
-                color: isOccupied
+                color: widget.isOccupied
                     ? const Color(0xFFB4ADFF)
                     : const Color(0xFFF9C35C)),
           ),
           onPressed: () {
             setState(() {
-              isOccupied = !isOccupied;
+              //TODO: implement or make ElevatedButton Text widget
             });
           },
         ),
         onLongPress: () {},
-        onTap: () {
-          Navigator.of(context).pushNamed(RoomEdit.routeName);
+        onTap: () async {
+          final updatedRoom = await Navigator.of(context).pushNamed(
+            RoomEdit.routeName,
+            arguments: RoomEditArgument(room: widget.room),
+          );
+
+          if (updatedRoom.runtimeType == Room) {
+            setState(() {
+              widget.isOccupied = !(updatedRoom as Room).isEmpty;
+            });
+          }
+          // print("runtime type " + updatedRoom.runtimeType.toString());
         },
       ),
     );
