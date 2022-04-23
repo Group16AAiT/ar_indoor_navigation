@@ -26,18 +26,6 @@ class BldgBloc extends Bloc<BldgEvent, BldgState> {
         print(e);
         yield const ErrorBldgState("error while getting all buildings");
       }
-    } else if (event is GetBuildingDetails) {
-      try {
-        yield BldgLoadingState();
-        final Building bldgResult =
-            await buildingRepository.getBuildingDetails(event.id);
-
-        yield BldgDetailsLoadedState(bldgResult);
-      } catch (e) {
-        print(e);
-        yield const ErrorBldgState(
-            "error while getting specific building detail");
-      }
     }
   }
 }

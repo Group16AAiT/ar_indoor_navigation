@@ -15,11 +15,3 @@ class GetBuildings extends BldgEvent {
   @override
   List<Object> get props => [];
 }
-
-class GetBuildingDetails extends BldgEvent {
-  String id;
-  GetBuildingDetails({required this.id});
-
-  @override
-  List<Object> get props => [id];
-}

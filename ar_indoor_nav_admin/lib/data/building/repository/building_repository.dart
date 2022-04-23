@@ -1,3 +1,4 @@
+import 'package:ar_indoor_nav_admin/data/bldg_detail/model/bldg_detail.dart';
 import 'package:ar_indoor_nav_admin/data/building/data_provider/building_data_provider.dart';
 import 'package:ar_indoor_nav_admin/data/building/model/building.dart';
 
@@ -12,7 +13,7 @@ class BuildingRepository {
     return await buildingDataProvider.getAllBuildings();
   }
 
-  Future<Building> getBuildingDetails(String bldgId) async {
+  Future<BldgDetail> getBuildingDetails(String bldgId) async {
     return await buildingDataProvider.getBuildingDetails(bldgId);
   }
 }

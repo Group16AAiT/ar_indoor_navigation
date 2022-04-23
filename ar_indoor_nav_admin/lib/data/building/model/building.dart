@@ -38,7 +38,7 @@ class Building extends Equatable {
   factory Building.fromMap(Map<String, dynamic> json) => Building(
         id: json["_id"],
         name: json["name"],
-        create: DateTime.parse(json["create"]),
+        create: DateTime.parse(json["createdAt"]),
         location: json["location"] ?? "Addis Ababa",
       );
 

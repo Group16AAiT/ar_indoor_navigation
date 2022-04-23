@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:ar_indoor_nav_admin/data/bldg_detail/model/bldg_detail.dart';
 import 'package:ar_indoor_nav_admin/data/building/model/building.dart';
 import 'package:http/http.dart' as http;
 
 class BuildingDataProvider {
-  final _baseURL = "http://192.168.1.72:8080";
+  // final _baseURL = "http://192.168.1.160:8080";
+  final _baseURL = 'https://ar-indoor-navigation.herokuapp.com';
   final http.Client httpClient;
 
   BuildingDataProvider({required this.httpClient});
@@ -26,7 +28,7 @@ class BuildingDataProvider {
     throw Exception('Failed to get list of buildings');
   }
 
-  Future<Building> getBuildingDetails(String bldgId) async {
+  Future<BldgDetail> getBuildingDetails(String bldgId) async {
     final response = await httpClient.get(
       Uri.parse('$_baseURL/buildings/$bldgId'),
       headers: <String, String>{
@@ -34,10 +36,7 @@ class BuildingDataProvider {
       },
     );
     if (response.statusCode == 200) {
-      final building = jsonDecode(response.body)["data"];
-      // return Building.fromMap(building);
-      final res = Building.fromMap(building);
-      return res;
+      return BldgDetail.fromMap(jsonDecode(response.body)["data"]);
     }
 
     throw Exception('Failed to get detail of building $bldgId');

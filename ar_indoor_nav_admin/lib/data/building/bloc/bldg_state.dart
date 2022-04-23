@@ -21,14 +21,6 @@ class AllBldgLoadedState extends BldgState {
   List<Object> get props => [fetchedbldgs];
 }
 
-class BldgDetailsLoadedState extends BldgState {
-  Building fetchedbldg;
-  BldgDetailsLoadedState(this.fetchedbldg);
-
-  @override
-  List<Object> get props => [fetchedbldg];
-}
-
 class ErrorBldgState extends BldgState {
   final String message;
   const ErrorBldgState(this.message);

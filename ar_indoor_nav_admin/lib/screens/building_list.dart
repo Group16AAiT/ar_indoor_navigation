@@ -1,3 +1,4 @@
+import 'package:ar_indoor_nav_admin/data/bldg_detail/bloc/bldg_detail_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/building/model/building.dart';
 import 'package:ar_indoor_nav_admin/screens/add_admin.dart';
@@ -224,7 +225,7 @@ class _BuildingRowState extends State<BuildingRow> {
         ),
         onLongPress: () {},
         onTap: () {
-          BlocProvider.of<BldgBloc>(context)
+          BlocProvider.of<BldgDetailBloc>(context)
               .add(GetBuildingDetails(id: widget.building.id));
 
           Navigator.of(context).pushNamed(
