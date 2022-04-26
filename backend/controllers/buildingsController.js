@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        
+
         const bldgId = req.params.id;
         var bldgRes = await Building.findById(bldgId).lean();
         
@@ -53,5 +53,40 @@ router.get('/:id', async (req, res, next) => {
 });
 
 
+router.get('/:id/:roomCategoryId', async (req, res, next) => {
+    try {
+        var roomCategoryId = req.params.roomCategoryId;
+        const requiredCategory = await Category.findById(roomCategoryId);
+        
+        const bldgId = req.params.id;
+        var bldgRes = await Building.findById(bldgId).lean();
+        
+        var roomListRes = [];
+        if (requiredCategory) {
+            roomListRes = await Rooms.find({bldgId: bldgId, category: requiredCategory._id});
+            for (let i = 0; i < roomListRes.length; i++) {
+                element = roomListRes[i];
+                roomListRes[i]["category"] = requiredCategory;
+            }
+        }
+        
+        bldgRes.rooms = roomListRes;
+        
+        res.json({
+            status: 'success',
+            code: 200,
+            message: 'Buildings Name',
+            data: bldgRes
+        })
+
+    } catch (e) {
+        // next(e);
+        res.json({
+            status: 'err',
+            code: 500,
+            message: e
+        });
+    }
+});
 
 module.exports = router;
