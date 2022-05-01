@@ -1,6 +1,7 @@
 import 'package:ar_indoor_nav_admin/data/bldg_detail/bloc/bldg_detail_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/bldg_detail/model/bldg_detail.dart';
 import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
+import 'package:ar_indoor_nav_admin/data/categories/bloc/bloc.dart';
 import 'package:ar_indoor_nav_admin/data/room/models/room.dart';
 import 'package:ar_indoor_nav_admin/screens/room_edit.dart';
 import 'package:ar_indoor_nav_admin/util/room_edit_argument.dart';
@@ -133,6 +134,7 @@ class _RoomRowState extends State<RoomRow> {
         ),
         onLongPress: () {},
         onTap: () async {
+          BlocProvider.of<CategoriesBloc>(context).add(const CategoriesLoad());
           final updatedRoom = await Navigator.of(context).pushNamed(
             RoomEdit.routeName,
             arguments: RoomEditArgument(room: widget.room),

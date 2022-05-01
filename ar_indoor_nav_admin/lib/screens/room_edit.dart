@@ -1,4 +1,5 @@
 import 'package:ar_indoor_nav_admin/data/bldg_detail/bloc/bldg_detail_bloc.dart';
+import 'package:ar_indoor_nav_admin/data/categories/bloc/bloc.dart';
 import 'package:ar_indoor_nav_admin/data/room/bloc/room/room_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/room/models/room.dart';
 import 'package:ar_indoor_nav_admin/util/validators/validators.dart';
@@ -20,6 +21,7 @@ class _RoomEditState extends State<RoomEdit> {
   late String _roomName;
   late String _roomCategory;
   late String _bldgId;
+  late List<String?> _categoryOptions;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,6 +32,7 @@ class _RoomEditState extends State<RoomEdit> {
     _roomCategory = widget.room.category.name;
     _isOccupied = !widget.room.isEmpty;
     _bldgId = widget.room.bldgId;
+    _categoryOptions = [_roomCategory];
   }
 
   @override
@@ -190,7 +193,6 @@ class _RoomEditState extends State<RoomEdit> {
                                       ),
                                       enabled: _isOccupied ? true : false,
                                       decoration: const InputDecoration(
-                                        // hintText: 'Email Address',
                                         border: InputBorder.none,
                                       ),
                                       onChanged: (value) {
@@ -218,30 +220,123 @@ class _RoomEditState extends State<RoomEdit> {
                                     ),
                                   ),
                                   const SizedBox(height: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x1AC4C4C4),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: TextFormField(
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      initialValue: '$_roomCategory',
-                                      decoration: const InputDecoration(
-                                        // hintText: 'Password',
-                                        border: InputBorder.none,
-                                      ),
-                                      onChanged: (value) {
-                                        _roomCategory = value;
-                                        print("new roomCategory " +
-                                            _roomCategory);
-                                      },
-                                    ),
+                                  BlocBuilder<CategoriesBloc, CategoriesState>(
+                                    builder: (context, state) {
+                                      if (state is CategoriesLoadSuccess) {
+                                        final _categories = state.categories;
+                                        _categoryOptions = _categories
+                                            .map((item) => item.name)
+                                            .toList();
+                                        print(
+                                            "state success len ${state.categories.length} categories ${state.categories} ");
+                                        print("room $_roomCategory");
+                                        return Container(
+                                          // width: 300,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 4),
+                                          decoration: BoxDecoration(
+                                              color: const Color(0x1AC4C4C4),
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Theme(
+                                            data: Theme.of(context).copyWith(
+                                              canvasColor:
+                                                  const Color(0xFF1A1820),
+                                            ),
+                                            child: DropdownButtonHideUnderline(
+                                                child: ButtonTheme(
+                                                    alignedDropdown: true,
+                                                    child:
+                                                        DropdownButton<String>(
+                                                      isExpanded: true,
+                                                      value: _roomCategory,
+                                                      iconSize: 30,
+                                                      icon: (null),
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                      // hint: Text('Select category'),
+                                                      hint: Text(
+                                                          '## $_roomCategory'),
+                                                      onChanged: (String? val) {
+                                                        setState(() {
+                                                          _roomCategory = val!;
+                                                        });
+                                                      },
+                                                      items: _categoryOptions
+                                                          .map((String? item) {
+                                                        return DropdownMenuItem(
+                                                          child: Text(
+                                                            "$item",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          value:
+                                                              item.toString(),
+                                                        );
+                                                      }).toList(),
+                                                    ))),
+                                          ),
+                                        );
+                                      }
+                                      // print("category state ${state}");
+                                      return Container(
+                                        // width: 300,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 4),
+                                        decoration: BoxDecoration(
+                                            color: const Color(0x1AC4C4C4),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Theme(
+                                          data: Theme.of(context).copyWith(
+                                            canvasColor:
+                                                const Color(0xFF1A1820),
+                                          ),
+                                          child: DropdownButtonHideUnderline(
+                                              child: ButtonTheme(
+                                                  alignedDropdown: true,
+                                                  child: DropdownButton<String>(
+                                                    isExpanded: true,
+                                                    value: _roomCategory,
+                                                    iconSize: 30,
+                                                    icon: (null),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                    ),
+                                                    hint: Text(
+                                                        '## $_roomCategory'),
+                                                    onChanged: (String? val) {
+                                                      setState(() {
+                                                        _roomCategory = val!;
+                                                      });
+                                                    },
+                                                    items: _categoryOptions
+                                                        .map((String? item) {
+                                                      return DropdownMenuItem(
+                                                        child: Text(
+                                                          "$item",
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        value: item.toString(),
+                                                      );
+                                                    }).toList(),
+                                                  ))),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ]),
                           ),
