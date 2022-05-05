@@ -4,7 +4,8 @@ let mongoose = require('mongoose');
 let categoriesSchema = mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     createdAt: {
         type: Date,
