@@ -93,9 +93,9 @@ router.post('/change-password', authMiddleware.isAuthenticated, async (req, res)
         }
         const validOldPassword = await bcrypt.compare(req.body.oldPassword, user.password);
         if (!validOldPassword) {
-            return res.status(401).json({
+            return res.status(403).json({
                 status: 'error',
-                code: 401,
+                code: 403,
                 message: "Invalid old password"
             });
         }
