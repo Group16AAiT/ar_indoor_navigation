@@ -96,6 +96,15 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id',  authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
+        var roomListRes = await Rooms.find({category: req.params.id});
+        // console.log({roomssFound: roomListRes});
+        if(roomListRes.length > 0) {
+            return res.status(409).json({
+                status: 'err',
+                code: 409,
+                message: "category can't be deleted. One or more rooms have it as category."
+            });
+        }
         await Categories.deleteMany({ _id: req.params.id });
         res.json({
             status: 'success',
