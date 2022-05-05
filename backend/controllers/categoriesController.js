@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 Categories = require('../models/categoriesModel');
+authMiddleware = require('../middlewares/auth');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -15,8 +16,16 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
+        var existingCategory = await Categories.findOne({name: req.body.name});
+        if (existingCategory) {
+            return res.status(409).json({
+                status: 'err',
+                code: 409,
+                message: "category already exists"
+            });
+        }
         let categories = new Categories()
         categories.name = req.body.name
         await categories.save()
@@ -41,6 +50,14 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         var category = await Categories.findById(req.params.id);
+        if(!category) {
+            return res.status(404).json({
+                status: 'success',
+                code: 404,
+                message: "Category doesn't exist",
+                data: category
+            });
+        }
         res.json({
             status: 'success',
             code: 200,
@@ -77,7 +94,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id',  authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
         await Categories.deleteMany({ _id: req.params.id });
         res.json({
@@ -89,7 +106,7 @@ router.delete('/:id', async (req, res, next) => {
         res.json({
             status: 'err',
             code: 500,
-            message: err
+            message: e
         });
     }
 });
