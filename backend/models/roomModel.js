@@ -2,7 +2,10 @@ let mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema({
     roomName: String,
-    roomNumber: String,
+    roomNumber: {
+        type: String,
+        unique: true,
+    }, 
     floorNumber: String,
     isEmpty: Boolean,
     createdAt: {
