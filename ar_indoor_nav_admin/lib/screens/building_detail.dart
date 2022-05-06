@@ -52,10 +52,24 @@ class BuildingDetail extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       );
                     } else if (state is BldgDetailLoadingState) {
-                      return const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.white,
-                        ),
+                      return Column(
+                        children: const [
+                          SizedBox(height: 48),
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                              child: SizedBox(
+                                height: 30,
+                                // width: 30,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color.fromRGBO(255, 255, 255, 1),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
                     }
                     // InitialBldgState
