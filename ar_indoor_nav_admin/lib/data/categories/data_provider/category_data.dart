@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:ar_indoor_nav_admin/data/categories/models/categories.dart';
 
 class CategoriesDataProvider {
-  final _baseUrl = 'http://192.168.1.72:8080';
+  final _baseUrl = "https://ar-indoor-navigation.herokuapp.com";
   final http.Client httpClient;
 
   CategoriesDataProvider({required this.httpClient});

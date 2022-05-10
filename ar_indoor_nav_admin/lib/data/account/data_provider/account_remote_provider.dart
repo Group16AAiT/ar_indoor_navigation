@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AccountRemoteDataProvider {
-  final _baseURL = "http://192.168.1.72:8080";
+  final _baseURL = "https://ar-indoor-navigation.herokuapp.com";
   final http.Client httpClient;
 
   AccountRemoteDataProvider({required this.httpClient});

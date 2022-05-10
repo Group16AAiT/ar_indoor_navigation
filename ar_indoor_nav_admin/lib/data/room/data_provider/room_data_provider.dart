@@ -6,7 +6,7 @@ import 'package:ar_indoor_nav_admin/data/room/models/room.dart';
 import 'package:http/http.dart' as http;
 
 class RoomDataProvider {
-  final _baseURL = "http://192.168.1.72:8080";
+  final _baseURL = "https://ar-indoor-navigation.herokuapp.com";
   final http.Client httpClient;
 
   RoomDataProvider({required this.httpClient});
