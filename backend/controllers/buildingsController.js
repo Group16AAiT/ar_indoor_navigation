@@ -3,6 +3,7 @@ var router = express.Router();
 Building = require('../models/buildingsModel').BuildingModel;
 Rooms = require('../models/roomModel').RoomModel;
 authMiddleware = require('../middlewares/auth');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 
 router.get('/', async (req, res, next) => {
@@ -24,8 +25,15 @@ router.get('/:id', async (req, res, next) => {
     try {
 
         const bldgId = req.params.id;
-        var bldgRes = await Building.findById(bldgId).lean();
-        
+        // var bldgRes = await Building.findById(bldgId)
+        if(!ObjectId.isValid(bldgId)) {
+            return res.status(404).json({message: "Bldg not found"});
+        }
+        var bldgRes = await Building.findOne({_id: bldgId});
+        if (!bldgRes) {
+            return res.status(404).json({message: "Bldg not found"});
+        } 
+        bldgRes = bldgRes.toObject();
         var roomListRes = await Rooms.find({bldgId: bldgId});
         
         for (let i = 0; i < roomListRes.length; i++) {
@@ -35,16 +43,16 @@ router.get('/:id', async (req, res, next) => {
         }
         bldgRes.rooms = roomListRes;
         
-        res.json({
+        res.status(200).json({
             status: 'success',
             code: 200,
-            message: 'Buildings Name',
+            message: 'Building loaded successfully',
             data: bldgRes
         })
 
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
