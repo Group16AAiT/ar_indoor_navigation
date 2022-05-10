@@ -4,26 +4,46 @@ const User = require('../models/userModel')
 // const verifyToken = require('./verifyToken')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
-const bcrypt = require('bcryptjs')
-authMiddleware = require('../middlewares/auth');
+const bcrypt = require('bcryptjs');
+const authMiddleware = require('../middlewares/auth');
+const Building = require('../models/buildingsModel').BuildingModel;
 
 
 // Signup router
-router.post('/signup', async (req, res) => {
+router.post('/signup', authMiddleware.isAuthenticated, async (req, res) => {
     try {
+        const loggedInUser = await User.findById(req.userId);
+        if(loggedInUser.mainManager !== true) {
+            return res.status(401).json({"message": "Unauthorized: Only main managers can add new bldg managers"});
+        }
+
         const { name, email, password } = req.body;
+        var similarEmailUser = await User.findOne({email});
+        if(similarEmailUser) {
+            return res.status(409).json({"message": "User with specified email already exists"});
+        }
+
         const user = new User({
             name,
             email,
-            password
+            password,
+            mainManager: false
         });
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
         await user.save();
-        const token = jwt.sign({ id: user.id }, config.secret, {
-            expiresIn: '24h'
-        });
-        res.status(200).json({ auth: true, token });
+
+        var blgdList = await Building.find();
+        for (let i = 0; i < blgdList.length; i++) {
+            currBldg = blgdList[i];
+            if(currBldg.managers.includes(loggedInUser._id)) {
+                currBldg.managers.push(user._id);
+                await currBldg.save();
+                break;
+            }
+        }
+        // await blgdList.save();
+        res.status(200).json({ success: true });
     }
     catch (e) {
         console.log(e)
@@ -37,6 +57,7 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email })
+        // console.log({userfetched: user});
         if (!user) {
             return res.status(404).send("User does not exist");
         }

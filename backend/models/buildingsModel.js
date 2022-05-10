@@ -15,6 +15,10 @@ let buildingSchema = mongoose.Schema({
     rooms: {
         type: [roomSchema.RoomSchema],
     },
+    managers: {
+        type: [String],
+        required: true
+    }
 });
 
 let building =  mongoose.model('Buildings', buildingSchema);
