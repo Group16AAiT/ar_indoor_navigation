@@ -1,7 +1,11 @@
 var express = require('express');
+const authMiddleware = require('../middlewares/auth');
 var router = express.Router();
 Rooms = require('../models/roomModel').RoomModel;
 Category = require('../models/categoriesModel');
+Building = require('../models/buildingsModel').BuildingModel;
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -16,7 +20,7 @@ router.get('/', async (req, res, next) => {
         res.json(roomListRes);
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -25,7 +29,7 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.post('/', async (req, res, next) => {
+router.post('/', authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
         var fetchedCategory = await Category.findOne({name: req.body.categoryName});
         const resCategory = fetchedCategory["_id"];
@@ -48,7 +52,7 @@ router.post('/', async (req, res, next) => {
     } catch (e) {
         // next(e);
         // console.log("errr " + e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -72,7 +76,7 @@ router.get('/:id', async (req, res, next) => {
 
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -109,7 +113,7 @@ router.put('/:id', async (req, res, next) => {
 
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -130,7 +134,7 @@ router.delete('/:id', async (req, res, next) => {
 
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
