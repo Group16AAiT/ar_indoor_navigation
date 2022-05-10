@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 Categories = require('../models/categoriesModel');
 authMiddleware = require('../middlewares/auth');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/', async (req, res, next) => {
     try {
         var categoriesList = await Categories.find({});
         res.json(categoriesList);
     } catch (e) {
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -37,7 +38,7 @@ router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
         })
 
     } catch (e) {
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -49,13 +50,16 @@ router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        var category = await Categories.findById(req.params.id);
+        const categoryId = req.params.id;
+        if(!ObjectId.isValid(categoryId)) {
+            return res.status(404).json({message: "Category not found"});
+        }
+        // var category = await Categories.findById(req.params.id);
+        var category = await Categories.findOne({_id: categoryId});
+        
         if(!category) {
             return res.status(404).json({
-                status: 'success',
-                code: 404,
-                message: "Category doesn't exist",
-                data: category
+                message: "Category not found",
             });
         }
         res.json({
@@ -65,7 +69,7 @@ router.get('/:id', async (req, res, next) => {
             data: category
         })
     } catch (e) {
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -85,7 +89,7 @@ router.put('/:id', async (req, res, next) => {
             data: category
         })
     } catch (e) {
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -112,7 +116,7 @@ router.delete('/:id',  authMiddleware.isAuthenticated, async (req, res, next) =>
             message: 'Category Removed'
         })
     } catch (e) {
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
