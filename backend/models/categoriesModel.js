@@ -10,6 +10,9 @@ let categoriesSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    bldgId: {
+        type: String,
     }
 });
 

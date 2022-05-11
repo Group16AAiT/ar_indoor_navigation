@@ -6,7 +6,9 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/', async (req, res, next) => {
     try {
-        var categoriesList = await Categories.find({});
+        // const bldgId = req.params.id;
+        const bldgId = res.locals.bldgId;
+        var categoriesList = await Categories.find({bldgId: bldgId});
         res.json(categoriesList);
     } catch (e) {
         res.status(500).json({
@@ -19,7 +21,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
-        var existingCategory = await Categories.findOne({name: req.body.name});
+        const bldgId = res.locals.bldgId;
+        var existingCategory = await Categories.findOne({name: req.body.name, bldgId: bldgId});
         if (existingCategory) {
             return res.status(409).json({
                 status: 'err',
@@ -29,6 +32,7 @@ router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
         }
         let categories = new Categories()
         categories.name = req.body.name
+        categories.bldgId = bldgId
         await categories.save()
         res.json({
             status: 'success',

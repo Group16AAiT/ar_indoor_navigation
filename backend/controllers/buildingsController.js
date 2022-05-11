@@ -4,6 +4,7 @@ Building = require('../models/buildingsModel').BuildingModel;
 Rooms = require('../models/roomModel').RoomModel;
 authMiddleware = require('../middlewares/auth');
 var ObjectId = require('mongoose').Types.ObjectId;
+var categoryRouter = require('./categoriesController');
 
 
 router.get('/', async (req, res, next) => {
@@ -20,6 +21,10 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.use('/:id/categories',async (req, res, next) => {
+    res.locals.bldgId = req.params.id;
+    return next()
+}, categoryRouter );
 
 router.get('/:id', async (req, res, next) => {
     try {
