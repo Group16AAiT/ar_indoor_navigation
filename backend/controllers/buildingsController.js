@@ -22,6 +22,14 @@ router.get('/', async (req, res, next) => {
 });
 
 router.use('/:id/categories',async (req, res, next) => {
+    const bldgId = req.params.id;
+    if(!ObjectId.isValid(bldgId)) {
+        return res.status(404).json({message: "Bldg not found"});
+    }
+    var bldgRes = await Building.findOne({_id: bldgId});
+    if (!bldgRes) {
+        return res.status(404).json({message: "Bldg not found"});
+    }
     res.locals.bldgId = req.params.id;
     return next()
 }, categoryRouter );
