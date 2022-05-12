@@ -9,6 +9,9 @@ router.get('/', async (req, res, next) => {
         // const bldgId = req.params.id;
         const bldgId = res.locals.bldgId;
         var categoriesList = await Categories.find({bldgId: bldgId});
+        if(categoriesList.length == 0) {
+            return res.status(404).json({message: "No categories found"});
+        }
         res.json(categoriesList);
     } catch (e) {
         res.status(500).json({
