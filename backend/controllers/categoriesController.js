@@ -8,9 +8,18 @@ router.get('/', async (req, res, next) => {
     try {
         // const bldgId = req.params.id;
         const bldgId = res.locals.bldgId;
-        var categoriesList = await Categories.find({bldgId: bldgId});
+        var roomListRes = await Rooms.find({bldgId: bldgId});
+        var counts = {}
+        for(const room of roomListRes) {
+            counts[room.category] = counts[room.category] ? counts[room.category] + 1: 1;
+        }
+        var categoriesList = await Categories.find({bldgId: bldgId}).lean();
         if(categoriesList.length == 0) {
             return res.status(404).json({message: "No categories found"});
+        }
+        for (let i = 0; i < categoriesList.length; i++) {
+            element = categoriesList[i];
+            categoriesList[i].count = counts[element._id];
         }
         res.json(categoriesList);
     } catch (e) {
