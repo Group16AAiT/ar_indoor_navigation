@@ -32,4 +32,9 @@ class AccountRepository {
   Future<void> signOut() async {
     await localDataProvider.deleteJWTToken();
   }
+
+  Future<bool> changePassword(String oldPassword, String newPassword) async {
+    String? token = await localDataProvider.readJWTToken();
+    return remoteDataProvider.changePassword(oldPassword, newPassword, token!);
+  }
 }

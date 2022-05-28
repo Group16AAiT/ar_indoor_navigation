@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class AccountRemoteDataProvider {
@@ -57,5 +58,24 @@ class AccountRemoteDataProvider {
     } else {
       throw Exception("failed to signin admin user");
     }
+  }
+
+  Future<bool> changePassword(
+      String oldPassword, String newPassword, String token) async {
+    final response = await httpClient.post(
+      Uri.parse('$_baseURL/change-password'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer $token",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "oldPassword": oldPassword,
+        "newPassword": newPassword,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    throw Exception('Failed to change password');
   }
 }
