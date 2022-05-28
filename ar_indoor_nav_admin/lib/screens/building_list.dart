@@ -4,6 +4,8 @@ import 'package:ar_indoor_nav_admin/data/building/model/building.dart';
 import 'package:ar_indoor_nav_admin/screens/add_admin.dart';
 import 'package:ar_indoor_nav_admin/screens/building_detail.dart';
 import 'package:ar_indoor_nav_admin/screens/category_list.dart';
+import 'package:ar_indoor_nav_admin/screens/change_password.dart';
+import 'package:ar_indoor_nav_admin/util/building_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,14 +44,15 @@ class BuildingList extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(
-                        CategoriesList.routeName,
+                        ChangePassword.routeName,
                       );
                     },
                     child: const Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                       child: Text(
-                        'Manage Categories',
+                        // 'Manage Categories',
+                        'Change password',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -230,6 +233,7 @@ class _BuildingRowState extends State<BuildingRow> {
 
           Navigator.of(context).pushNamed(
             BuildingDetail.routeName,
+            arguments: BuildingArgument(bldgId: widget.building.id),
           );
         },
       ),
