@@ -6,19 +6,20 @@ class CategoriesRepository {
 
   CategoriesRepository({required this.dataProvider});
 
-  Future<Category> createCategory(Category category) async {
-    return await dataProvider.createCategory(category);
+  Future<Category> createCategory(
+      Category category, String bldgId, String token) async {
+    return await dataProvider.createCategory(category, bldgId, token);
   }
 
-  Future<List<Category>> getCategories() async {
-    return await dataProvider.getCategories();
+  Future<List<Category>> getCategories({required String bldgId}) async {
+    return await dataProvider.getCategories(bldgId: bldgId);
   }
 
-  Future<void> updateCategory(Category category) async {
-    await dataProvider.updateCategory(category);
+  Future<void> updateCategory(Category category, String token) async {
+    await dataProvider.updateCategory(category, token);
   }
 
-  Future<void> deleteCategory(String id) async {
-    await dataProvider.deleteCategory(id);
+  Future<void> deleteCategory(String id, String bldgId, String token) async {
+    await dataProvider.deleteCategory(id, bldgId, token);
   }
 }

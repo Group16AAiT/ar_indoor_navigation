@@ -1,3 +1,4 @@
+import 'package:ar_indoor_nav_admin/data/account/bloc/change_password/bloc/bloc/change_password_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/bldg_detail/bloc/bldg_detail_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/building/data_provider/building_data_provider.dart';
@@ -66,9 +67,14 @@ class MyApp extends StatelessWidget {
           create: (context) => RoomBloc(roomRepository: roomRepository),
         ),
         BlocProvider(
+            create: (context) => CategoriesBloc(
+                categoriesRepository: categoriesRepository,
+                accountRepository: accountRepository)
+            // ..add(const CategoriesLoad()),
+            ),
+        BlocProvider(
           create: (context) =>
-              CategoriesBloc(categoriesRepository: categoriesRepository)
-                ..add(const CategoriesLoad()),
+              ChangePasswordBloc(accountRepository: accountRepository),
         ),
       ],
       child: MaterialApp(

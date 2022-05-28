@@ -3,14 +3,17 @@ import 'package:ar_indoor_nav_admin/data/bldg_detail/model/bldg_detail.dart';
 import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/categories/bloc/bloc.dart';
 import 'package:ar_indoor_nav_admin/data/room/models/room.dart';
+import 'package:ar_indoor_nav_admin/screens/category_list.dart';
 import 'package:ar_indoor_nav_admin/screens/room_edit.dart';
+import 'package:ar_indoor_nav_admin/util/category_argument.dart';
 import 'package:ar_indoor_nav_admin/util/room_edit_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuildingDetail extends StatelessWidget {
   static const routeName = "/buildingDetail";
-  const BuildingDetail({Key? key}) : super(key: key);
+  String bldgId;
+  BuildingDetail({Key? key, required this.bldgId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,58 @@ class BuildingDetail extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
+                // const SizedBox(height: 80),
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        BlocProvider.of<CategoriesBloc>(context)
+                            .add(CategoriesLoad(
+                          bldgId: bldgId,
+                        ));
+                        Navigator.of(context).pushNamed(
+                          CategoriesList.routeName,
+                          arguments: CategoryArgument(bldgId: bldgId),
+                        );
+                      },
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        child: Text(
+                          'Manage Categories',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      // textColor: Colors.white,
+                      style: TextButton.styleFrom(
+                        primary: const Color(0xFFF9C35C),
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                color: Color(0xFFF9C35C),
+                                width: 1,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Text(
+                    'Rooms',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 BlocBuilder<BldgDetailBloc, BldgDetailState>(
                   builder: (context, state) {
                     if (state is BldgDetailsLoadedState) {
@@ -134,7 +188,9 @@ class _RoomRowState extends State<RoomRow> {
         ),
         onLongPress: () {},
         onTap: () async {
-          BlocProvider.of<CategoriesBloc>(context).add(const CategoriesLoad());
+          BlocProvider.of<CategoriesBloc>(context).add(CategoriesLoad(
+            bldgId: widget.room.bldgId,
+          ));
           final updatedRoom = await Navigator.of(context).pushNamed(
             RoomEdit.routeName,
             arguments: RoomEditArgument(room: widget.room),

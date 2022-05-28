@@ -1,10 +1,12 @@
 import 'package:ar_indoor_nav_admin/screens/category.dart';
 import 'package:ar_indoor_nav_admin/screens/category_add.dart';
+import 'package:ar_indoor_nav_admin/util/category_argument.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesList extends StatelessWidget {
   static const routeName = "/categories";
-  const CategoriesList({Key? key}) : super(key: key);
+  final String bldgId;
+  const CategoriesList({Key? key, required this.bldgId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class CategoriesList extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushNamed(
                         AddCategory.routeName,
+                        arguments: CategoryArgument(bldgId: bldgId),
                       );
                     },
                     label: Container(
@@ -71,7 +74,7 @@ class CategoriesList extends StatelessWidget {
                 const SizedBox(height: 4),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 40),
-                  child: const Category(),
+                  child: Category(bldgId: bldgId),
                 ),
                 // const SizedBox(height: 40),
                 // const Expanded(child: Category()),

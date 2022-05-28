@@ -19,4 +19,11 @@ class CategoriesLoadSuccess extends CategoriesState {
   List<Object> get props => [categories];
 }
 
-class CategoriesOperationError extends CategoriesState {}
+class CategoriesOperationError extends CategoriesState {
+  final String message;
+
+  const CategoriesOperationError({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

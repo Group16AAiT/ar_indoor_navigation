@@ -5,7 +5,8 @@ import 'package:ar_indoor_nav_admin/data/categories/models/categories.dart';
 
 class AddCategory extends StatefulWidget {
   static const routeName = '/categoryAdd';
-  const AddCategory({Key? key}) : super(key: key);
+  final String bldgId;
+  const AddCategory({Key? key, required this.bldgId}) : super(key: key);
   @override
   _AddCategoryState createState() => _AddCategoryState();
 }
@@ -161,6 +162,7 @@ class _AddCategoryState extends State<AddCategory> {
                                 Category(
                                   name: _categoryPayload["name"],
                                 ),
+                                widget.bldgId,
                               );
                               BlocProvider.of<CategoriesBloc>(context)
                                   .add(event);

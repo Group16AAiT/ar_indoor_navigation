@@ -1,3 +1,6 @@
+import 'package:ar_indoor_nav_admin/screens/change_password.dart';
+import 'package:ar_indoor_nav_admin/util/building_argument.dart';
+import 'package:ar_indoor_nav_admin/util/category_argument.dart';
 import 'package:ar_indoor_nav_admin/util/room_edit_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,46 +44,45 @@ class PageRouter {
               }
               BlocProvider.of<AuthenticationBloc>(context)
                   .add(AuthenticationEvent.getAuthState);
-              return const CircularProgressIndicator();
+              // return const CircularProgressIndicator();
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                  child: SizedBox(
+                    height: 30,
+                    // width: 30,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              );
             },
           );
         });
       case CategoriesList.routeName:
+        final args = settings.arguments as CategoryArgument;
         return MaterialPageRoute(builder: (context) {
-          return BlocBuilder<CategoriesBloc, CategoriesState>(
-              builder: (_, state) {
-            if (state is CategoriesLoadSuccess) {
-              return const CategoriesList();
-            }
-            // if (state is CategoriesOperationError) {
-            //   return const Text("data");
-            // }
-
-            return Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                  CircularProgressIndicator(
-                    backgroundColor: Color.fromARGB(255, 69, 65, 83),
-                    valueColor: AlwaysStoppedAnimation(
-                        Color.fromARGB(255, 184, 178, 167)),
-                    strokeWidth: 7,
-                  ),
-                ]));
-          });
+          return CategoriesList(
+            bldgId: args.bldgId,
+          );
         });
 
       case AddCategory.routeName:
+        final args = settings.arguments as CategoryArgument;
         return MaterialPageRoute(builder: (context) {
-          return const AddCategory();
+          return AddCategory(bldgId: args.bldgId);
         });
       case BuildingList.routeName:
         return MaterialPageRoute(builder: (context) {
           return const BuildingList();
         });
       case BuildingDetail.routeName:
+        final bldgArg = settings.arguments as BuildingArgument;
         return MaterialPageRoute(builder: (context) {
-          return const BuildingDetail();
+          return BuildingDetail(bldgId: bldgArg.bldgId);
         });
       case RoomEdit.routeName:
         final roomArg = settings.arguments as RoomEditArgument;
@@ -90,6 +92,10 @@ class PageRouter {
       case AddAdminPage.routeName:
         return MaterialPageRoute(builder: (context) {
           return AddAdminPage();
+        });
+      case ChangePassword.routeName:
+        return MaterialPageRoute(builder: (context) {
+          return ChangePassword();
         });
       default:
         return MaterialPageRoute(builder: (context) {
