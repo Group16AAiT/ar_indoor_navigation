@@ -109,9 +109,18 @@ class BuildingDetail extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       );
                     } else if (state is BldgDetailLoadingState) {
-                      return const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.white,
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                          child: SizedBox(
+                            height: 30,
+                            // width: 30,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     }
