@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
         res.json(userListRes);
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
         })
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -48,7 +48,7 @@ router.put('/:id', async (req, res, next) => {
         })
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res, next) => {
         })
     } catch (e) {
         // next(e);
-        res.json({
+        res.status(500).json({
             status: 'err',
             code: 500,
             message: e
