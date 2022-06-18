@@ -36,6 +36,7 @@ class BuildingDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
+                      key: Key('manageCategoriesButton'),
                       onPressed: () {
                         BlocProvider.of<CategoriesBloc>(context)
                             .add(CategoriesLoad(
@@ -91,10 +92,12 @@ class BuildingDetail extends StatelessWidget {
                       // return Text("found # ${rooms.length} amount of rooms");
                       return Flexible(
                         child: ListView.builder(
+                            key: const Key("roomListView"),
                             itemCount: rooms.length,
                             itemBuilder: (context, index) {
                               final currRoom = rooms[index];
                               return RoomRow(
+                                key: Key('Room$index'),
                                 room: currRoom,
                                 isOccupied: !currRoom.isEmpty,
                               );

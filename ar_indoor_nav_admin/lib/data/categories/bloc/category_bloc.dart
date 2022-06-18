@@ -36,7 +36,7 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
         yield CategoriesLoadSuccess(categoriesList);
       } catch (_) {
         yield const CategoriesOperationError(
-            message: "failed to create category. !");
+            message: "failed to create category!");
       }
     } else if (event is CategoryUpdate) {
       try {
@@ -64,7 +64,7 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
         yield CategoriesLoadSuccess(categoriesList);
       } catch (_) {
         yield const CategoriesOperationError(
-            message: "failed to delete category. !");
+            message: "failed to delete category!");
       }
     } else {}
   }

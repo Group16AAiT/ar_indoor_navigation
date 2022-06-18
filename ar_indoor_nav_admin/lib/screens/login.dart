@@ -95,6 +95,7 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextFormField(
+                          key: const Key("emailField"),
                           initialValue: '',
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
@@ -133,6 +134,7 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextFormField(
+                          key: const Key("passwordField"),
                           initialValue: '',
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
@@ -143,8 +145,8 @@ class LoginPage extends StatelessWidget {
                             _password = value;
                             print("new passwordddd " + _password);
                           },
-                          // validator: (value) =>
-                          //     Validators.validatePassword(value)?.toString(),
+                          validator: (value) =>
+                              Validators.validatePassword(value)?.toString(),
                         ),
                       ),
                     ]),
@@ -153,6 +155,7 @@ class LoginPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: ElevatedButton(
+                  key: const Key("loginButton"),
                   style: ElevatedButton.styleFrom(
                     primary: const Color(0xFFF9C35C),
                     fixedSize: const Size(243, 41),

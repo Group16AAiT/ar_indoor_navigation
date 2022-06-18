@@ -93,11 +93,12 @@ class _AddCategoryState extends State<AddCategory> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: TextFormField(
+                                    key: const Key('categoryNameField'),
                                     initialValue: '',
                                     style: const TextStyle(color: Colors.white),
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return 'Please enter Category name';
+                                        return 'Category name is required';
                                       }
                                       return null;
                                     },
@@ -149,6 +150,7 @@ class _AddCategoryState extends State<AddCategory> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: ElevatedButton(
+                          key: const Key('addCategorySubmitButton'),
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xFFF9C35C),
                             // fixedSize: Size(243, 41),

@@ -41,6 +41,7 @@ class CategoriesList extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
+                    key: Key('addCategoryBtn'),
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       Navigator.of(context).pushNamed(

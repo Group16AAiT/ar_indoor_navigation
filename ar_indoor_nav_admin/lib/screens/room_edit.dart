@@ -185,6 +185,7 @@ class _RoomEditState extends State<RoomEdit> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: TextFormField(
+                                      key: const Key("roomNameField"),
                                       initialValue: '$_roomName',
                                       style: const TextStyle(
                                         fontSize: 14,
@@ -199,9 +200,9 @@ class _RoomEditState extends State<RoomEdit> {
                                         _roomName = value;
                                         print("new roomName " + _roomName);
                                       },
-                                      // validator: (value) =>
-                                      //     Validators.validateName(value)
-                                      //         ?.toString(),
+                                      validator: (value) =>
+                                          Validators.validateName(value)
+                                              ?.toString(),
                                     ),
                                   ),
                                   const SizedBox(height: 14),
@@ -344,6 +345,7 @@ class _RoomEditState extends State<RoomEdit> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: ElevatedButton(
+                              key: const Key("editRoomSaveButton"),
                               style: ElevatedButton.styleFrom(
                                 primary: const Color(0xFFF9C35C),
                                 // fixedSize: Size(243, 41),

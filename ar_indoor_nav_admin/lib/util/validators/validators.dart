@@ -21,7 +21,7 @@ class Validators {
 
   static String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
-      return 'Name is required! Can\'t be null';
+      return 'Email is required! Can\'t be null';
     }
 
     return !checkRegex(EMAIL_REGEX, email) ? "Invalid email address." : null;

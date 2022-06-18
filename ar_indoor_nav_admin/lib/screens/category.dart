@@ -13,9 +13,10 @@ class Category extends StatelessWidget {
         listener: (_, state) {
           if (state is CategoriesOperationError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Error loading categories"),
+              SnackBar(
+                // content: Text("Error loading categories"),
                 // content: Text("Error loading categories ${state.message}"),
+                content: Text("Error: ${state.message}"),
               ),
             );
           }
@@ -26,6 +27,7 @@ class Category extends StatelessWidget {
             return Center(
               //margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
               child: ListView.separated(
+                  key: const Key("categoryListView"),
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
                       height: 15,
@@ -41,6 +43,7 @@ class Category extends StatelessWidget {
                         bottomLeft: Radius.circular(32),
                       ),
                       child: ListTile(
+                        key: Key('categoryListTile$idx'),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -51,6 +54,7 @@ class Category extends StatelessWidget {
                             const VisualDensity(horizontal: 0, vertical: 4),
 
                         title: Text(category[idx].name,
+                            key: Key('categoryNameDisplayText$idx'),
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

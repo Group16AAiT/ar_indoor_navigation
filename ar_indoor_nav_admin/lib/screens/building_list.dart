@@ -29,6 +29,7 @@ class BuildingList extends StatelessWidget {
               ),
               const Text(
                 "Buildings",
+                key: Key("buildingListHeader"),
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
@@ -129,10 +130,12 @@ class BuildingList extends StatelessWidget {
                     final allFetchedBldgs = state.fetchedbldgs;
                     return Flexible(
                       child: ListView.builder(
+                          key: const Key("bldgListView"),
                           itemCount: allFetchedBldgs.length,
                           itemBuilder: (context, index) {
                             final currBldg = allFetchedBldgs[index];
                             return BuildingRow(
+                              key: Key('Bldg$index'),
                               building: currBldg,
                             );
                           }),
