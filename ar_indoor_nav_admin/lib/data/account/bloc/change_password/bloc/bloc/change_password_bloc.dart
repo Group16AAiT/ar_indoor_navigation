@@ -23,6 +23,8 @@ class ChangePasswordBloc
         await (accountRepository.changePassword(
             event.oldPassword, event.newPassword));
         yield ChangePasswordSuccess();
+      } on Exception catch (e) {
+        yield ChangePasswordErrorState(message: "error: ${e.toString()}");
       } catch (e) {
         print(e);
         yield ChangePasswordErrorState(

@@ -37,8 +37,11 @@ class ChangePassword extends StatelessWidget {
           Navigator.of(context).pop();
         } else if (state is ChangePasswordErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Error changing password"),
+            SnackBar(
+              // content: Text("Error changing password"),
+              content: state.message != ""
+                  ? Text("${state.message}")
+                  : const Text("error"),
             ),
           );
         }
