@@ -1,3 +1,4 @@
+import 'package:ar_indoor_nav_admin/data/account/account.dart';
 import 'package:ar_indoor_nav_admin/data/bldg_detail/bloc/bldg_detail_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/building/bloc/bldg_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/building/model/building.dart';
@@ -18,10 +19,54 @@ class BuildingList extends StatefulWidget {
 }
 
 class _BuildingListState extends State<BuildingList> {
+  void _handleClick(String value) {
+    switch (value) {
+      case 'Change password':
+        Navigator.of(context).pushNamed(
+          ChangePassword.routeName,
+        );
+        break;
+      case 'Add Admin':
+        Navigator.of(context).pushNamed(
+          AddAdminPage.routeName,
+        );
+
+        break;
+      case 'Logout':
+        BlocProvider.of<AuthenticationBloc>(context)
+            .add(AuthenticationEvent.unAuthenticate);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: const Color(0xFFAADDEE),
+        backgroundColor: const Color(0xFF1A1820),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            // shape: RoundedRectangleBorder(
+            //     side: const BorderSide(
+            //         // color: Color(0xFFF9C35C),
+            //         width: 1,
+            //         style: BorderStyle.solid),
+            //     borderRadius: BorderRadius.circular(5)),
+            onSelected: _handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Change password', 'Add Admin', 'Logout'}
+                  .map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
       backgroundColor: const Color(0xFF1A1820),
       body: SafeArea(
         child: Padding(
@@ -30,7 +75,7 @@ class _BuildingListState extends State<BuildingList> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(
-                height: 94,
+                height: 72,
               ),
               const Text(
                 "Buildings",
@@ -41,78 +86,79 @@ class _BuildingListState extends State<BuildingList> {
                   fontSize: 36,
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        ChangePassword.routeName,
-                      );
-                    },
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      child: Text(
-                        // 'Manage Categories',
-                        'Change password',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    // textColor: Colors.white,
-                    style: TextButton.styleFrom(
-                      primary: const Color(0xFFF9C35C),
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              color: Color(0xFFF9C35C),
-                              width: 1,
-                              style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          AddAdminPage.routeName,
-                        );
-                      },
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                        child: Text(
-                          'Add Admin',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      // textColor: Colors.white,
-                      style: TextButton.styleFrom(
-                        primary: const Color(0xFFF9C35C),
-                        shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                color: Color(0xFFF9C35C),
-                                width: 1,
-                                style: BorderStyle.solid),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
+              // const SizedBox(
+              //   height: 16,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.of(context).pushNamed(
+              //           ChangePassword.routeName,
+              //         );
+              //       },
+              //       child: const Padding(
+              //         padding:
+              //             EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              //         child: Text(
+              //           // 'Manage Categories',
+              //           'Change password',
+              //           style: TextStyle(
+              //             fontSize: 14,
+              //             fontWeight: FontWeight.w700,
+              //           ),
+              //         ),
+              //       ),
+              //       // textColor: Colors.white,
+              //       style: TextButton.styleFrom(
+              //         primary: const Color(0xFFF9C35C),
+              //         shape: RoundedRectangleBorder(
+              //             side: const BorderSide(
+              //                 color: Color(0xFFF9C35C),
+              //                 width: 1,
+              //                 style: BorderStyle.solid),
+              //             borderRadius: BorderRadius.circular(10)),
+              //       ),
+              //     ),
+              //     Padding(
+              //       padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+              //       child: TextButton(
+              //         onPressed: () {
+              //           Navigator.of(context).pushNamed(
+              //             AddAdminPage.routeName,
+              //           );
+              //         },
+              //         child: const Padding(
+              //           padding:
+              //               EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              //           child: Text(
+              //             'Add Admin',
+              //             style: TextStyle(
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //           ),
+              //         ),
+              //         // textColor: Colors.white,
+              //         style: TextButton.styleFrom(
+              //           primary: const Color(0xFFF9C35C),
+              //           shape: RoundedRectangleBorder(
+              //               side: const BorderSide(
+              //                   color: Color(0xFFF9C35C),
+              //                   width: 1,
+              //                   style: BorderStyle.solid),
+              //               borderRadius: BorderRadius.circular(10)),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 32),
               // const BuildingRow(),
               // const BuildingRow(),
               // const BuildingRow(),
+              const SizedBox(height: 16),
 
               BlocBuilder<BldgBloc, BldgState>(
                 builder: (context, state) {
