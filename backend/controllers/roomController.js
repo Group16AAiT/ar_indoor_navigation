@@ -31,6 +31,30 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
+        // console.log({"aaa": req.headers.authorization.split(' ')[1]});
+        const token = req.headers.authorization.split(' ')[1];
+        // console.log("bbb");
+        const decoded = jwt.verify(token, config.secret)
+        // const user = await User.findById(decoded.id)
+        
+        // var fetchedBuilding = await Building.findById(req.body.bldgId).lean();
+        var fetchedBuilding = await Building.findById(req.body.bldgId);
+        console.log({fetchedBuilding: fetchedBuilding});
+        var temp = fetchedBuilding.toObject();
+        // console.log({"temp ": temp});
+        fetchedBuilding = temp;
+        const allowedBldgManagers = fetchedBuilding.managers;
+        if (!(allowedBldgManagers.includes(decoded.id))) {
+            // console.log("x");
+            return res.status(403).json({
+                message: 'Insufficient permission for user.',
+                error: true
+            });
+        }else {
+            // console.log("ww");
+        }
+
+
         var fetchedCategory = await Category.findOne({name: req.body.categoryName});
         const resCategory = fetchedCategory["_id"];
         
