@@ -56,7 +56,7 @@ router.post('/signup', authMiddleware.isAuthenticated, async (req, res) => {
 // Login router
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email })
+        const user = await User.findOne({ email: req.body.email.toLowerCase() })
         // console.log({userfetched: user});
         if (!user) {
             return res.status(404).send("User does not exist");
