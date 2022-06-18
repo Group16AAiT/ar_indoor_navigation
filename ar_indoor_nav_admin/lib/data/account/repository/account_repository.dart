@@ -11,8 +11,9 @@ class AccountRepository {
   });
 
   Future<void> signUpAdmin(String name, String email, String password) async {
-    String token = await remoteDataProvider.signUpAdmin(
-        name: name, email: email, password: password);
+    String? token = await localDataProvider.readJWTToken();
+    await remoteDataProvider.signUpAdmin(
+        name: name, email: email, password: password, token: token!);
 
     // return _saveToken(token); // since only registering new admin not signing in with the account
   }

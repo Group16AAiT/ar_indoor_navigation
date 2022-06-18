@@ -8,16 +8,19 @@ class AccountRemoteDataProvider {
 
   AccountRemoteDataProvider({required this.httpClient});
 
-  Future<String> signUpAdmin(
-      {required String name,
-      required String email,
-      required String password}) async {
+  Future<void> signUpAdmin({
+    required String name,
+    required String email,
+    required String password,
+    required String token,
+  }) async {
     // Map data = {'name': name, 'email': email, 'password': password};
     const urlPath = "/signup";
     final response = await httpClient.post(
       Uri.parse('$_baseURL/signup'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer $token",
       },
       body: jsonEncode(<String, dynamic>{
         "name": name,
@@ -29,7 +32,6 @@ class AccountRemoteDataProvider {
     if (response.statusCode == 200) {
       print('Response Status : ${response.statusCode}');
       print('Response body: ${response.body}');
-      return jsonDecode(response.body)['token'];
     } else {
       throw Exception("Failed to signup new admin");
     }
@@ -75,6 +77,8 @@ class AccountRemoteDataProvider {
     );
     if (response.statusCode == 200) {
       return true;
+    } else if (response.statusCode == 403) {
+      throw Exception('${jsonDecode(response.body)["message"]}');
     }
     throw Exception('Failed to change password');
   }

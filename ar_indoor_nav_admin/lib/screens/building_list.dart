@@ -9,10 +9,15 @@ import 'package:ar_indoor_nav_admin/util/building_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuildingList extends StatelessWidget {
+class BuildingList extends StatefulWidget {
   static const routeName = "/buildingList";
   const BuildingList({Key? key}) : super(key: key);
 
+  @override
+  State<BuildingList> createState() => _BuildingListState();
+}
+
+class _BuildingListState extends State<BuildingList> {
   @override
   Widget build(BuildContext context) {
     // final screenHeight = MediaQuery.of(context).size.height;
@@ -20,7 +25,7 @@ class BuildingList extends StatelessWidget {
       backgroundColor: const Color(0xFF1A1820),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
