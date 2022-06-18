@@ -20,12 +20,6 @@ import 'package:ar_indoor_nav_admin/data/categories/repository/categories_reposi
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-
   final AccountRepository accountRepository = AccountRepository(
     remoteDataProvider: AccountRemoteDataProvider(httpClient: http.Client()),
     localDataProvider: AccountLocalDataProvider(
@@ -41,6 +35,28 @@ class MyApp extends StatelessWidget {
 
   final CategoriesRepository categoriesRepository = CategoriesRepository(
       dataProvider: CategoriesDataProvider(httpClient: http.Client()));
+
+  runApp(MyApp(
+    accountRepository: accountRepository,
+    buildingRepository: buildingRepository,
+    categoriesRepository: categoriesRepository,
+    roomRepository: roomRepository,
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  AccountRepository accountRepository;
+  BuildingRepository buildingRepository;
+  RoomRepository roomRepository;
+  CategoriesRepository categoriesRepository;
+
+  MyApp({
+    Key? key,
+    required this.accountRepository,
+    required this.buildingRepository,
+    required this.roomRepository,
+    required this.categoriesRepository,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
