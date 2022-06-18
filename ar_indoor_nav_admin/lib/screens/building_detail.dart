@@ -25,109 +25,122 @@ class BuildingDetail extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xFF1A1820),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: RefreshIndicator(
+            onRefresh: () async {
+              BlocProvider.of<BldgDetailBloc>(context).add(
+                GetBuildingDetails(id: bldgId),
+              );
+            },
+            child: Stack(
               children: [
-                // const SizedBox(height: 80),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      key: Key('manageCategoriesButton'),
-                      onPressed: () {
-                        BlocProvider.of<CategoriesBloc>(context)
-                            .add(CategoriesLoad(
-                          bldgId: bldgId,
-                        ));
-                        Navigator.of(context).pushNamed(
-                          CategoriesList.routeName,
-                          arguments: CategoryArgument(bldgId: bldgId),
-                        );
-                      },
-                      child: const Padding(
+                ListView(),
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // const SizedBox(height: 80),
+                      const SizedBox(height: 40),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            key: Key('manageCategoriesButton'),
+                            onPressed: () {
+                              BlocProvider.of<CategoriesBloc>(context)
+                                  .add(CategoriesLoad(
+                                bldgId: bldgId,
+                              ));
+                              Navigator.of(context).pushNamed(
+                                CategoriesList.routeName,
+                                arguments: CategoryArgument(bldgId: bldgId),
+                              );
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 8),
+                              child: Text(
+                                'Manage Categories',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            // textColor: Colors.white,
+                            style: TextButton.styleFrom(
+                              primary: const Color(0xFFF9C35C),
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: Color(0xFFF9C35C),
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      const Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         child: Text(
-                          'Manage Categories',
+                          'Rooms',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 22,
                             fontWeight: FontWeight.w700,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                      // textColor: Colors.white,
-                      style: TextButton.styleFrom(
-                        primary: const Color(0xFFF9C35C),
-                        shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                color: Color(0xFFF9C35C),
-                                width: 1,
-                                style: BorderStyle.solid),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  child: Text(
-                    'Rooms',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                BlocBuilder<BldgDetailBloc, BldgDetailState>(
-                  builder: (context, state) {
-                    if (state is BldgDetailsLoadedState) {
-                      final BldgDetail allBldgDetails =
-                          state.fetchedBldgDetails;
-                      final List<Room> rooms = allBldgDetails.rooms;
-                      // return Text("found # ${rooms.length} amount of rooms");
-                      return Flexible(
-                        child: ListView.builder(
-                            key: const Key("roomListView"),
-                            itemCount: rooms.length,
-                            itemBuilder: (context, index) {
-                              final currRoom = rooms[index];
-                              return RoomRow(
-                                key: Key('Room$index'),
-                                room: currRoom,
-                                isOccupied: !currRoom.isEmpty,
-                              );
-                            }),
-                      );
-                    } else if (state is ErrorBldgDetailState) {
-                      return const Text(
-                        "error loading detailss ? ",
-                        style: TextStyle(color: Colors.white),
-                      );
-                    } else if (state is BldgDetailLoadingState) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
-                          child: SizedBox(
-                            height: 30,
-                            // width: 30,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
+                      BlocBuilder<BldgDetailBloc, BldgDetailState>(
+                        builder: (context, state) {
+                          if (state is BldgDetailsLoadedState) {
+                            final BldgDetail allBldgDetails =
+                                state.fetchedBldgDetails;
+                            final List<Room> rooms = allBldgDetails.rooms;
+                            // return Text("found # ${rooms.length} amount of rooms");
+                            return Flexible(
+                              child: ListView.builder(
+                                  key: const Key("roomListView"),
+                                  itemCount: rooms.length,
+                                  itemBuilder: (context, index) {
+                                    final currRoom = rooms[index];
+                                    return RoomRow(
+                                      key: Key('Room$index'),
+                                      room: currRoom,
+                                      isOccupied: !currRoom.isEmpty,
+                                    );
+                                  }),
+                            );
+                          } else if (state is ErrorBldgDetailState) {
+                            return const Text(
+                              "error loading detailss ? ",
+                              style: TextStyle(color: Colors.white),
+                            );
+                          } else if (state is BldgDetailLoadingState) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                                child: SizedBox(
+                                  height: 30,
+                                  // width: 30,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    // InitialBldgState
-                    return const Text("HI",
-                        style: TextStyle(color: Colors.white));
-                  },
+                            );
+                          }
+                          // InitialBldgState
+                          return const Text("HI",
+                              style: TextStyle(color: Colors.white));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

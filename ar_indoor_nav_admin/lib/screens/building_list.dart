@@ -69,169 +69,182 @@ class _BuildingListState extends State<BuildingList> {
       ),
       backgroundColor: const Color(0xFF1A1820),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            BlocProvider.of<BldgBloc>(context).add(
+              const GetBuildings(),
+            );
+          },
+          child: Stack(
             children: [
-              const SizedBox(
-                height: 72,
-              ),
-              const Text(
-                "Buildings",
-                key: Key("buildingListHeader"),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 36,
-                ),
-              ),
-              // const SizedBox(
-              //   height: 16,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     TextButton(
-              //       onPressed: () {
-              //         Navigator.of(context).pushNamed(
-              //           ChangePassword.routeName,
-              //         );
-              //       },
-              //       child: const Padding(
-              //         padding:
-              //             EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              //         child: Text(
-              //           // 'Manage Categories',
-              //           'Change password',
-              //           style: TextStyle(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w700,
-              //           ),
-              //         ),
-              //       ),
-              //       // textColor: Colors.white,
-              //       style: TextButton.styleFrom(
-              //         primary: const Color(0xFFF9C35C),
-              //         shape: RoundedRectangleBorder(
-              //             side: const BorderSide(
-              //                 color: Color(0xFFF9C35C),
-              //                 width: 1,
-              //                 style: BorderStyle.solid),
-              //             borderRadius: BorderRadius.circular(10)),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-              //       child: TextButton(
-              //         onPressed: () {
-              //           Navigator.of(context).pushNamed(
-              //             AddAdminPage.routeName,
-              //           );
-              //         },
-              //         child: const Padding(
-              //           padding:
-              //               EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              //           child: Text(
-              //             'Add Admin',
-              //             style: TextStyle(
-              //               fontSize: 14,
-              //               fontWeight: FontWeight.w700,
-              //             ),
-              //           ),
-              //         ),
-              //         // textColor: Colors.white,
-              //         style: TextButton.styleFrom(
-              //           primary: const Color(0xFFF9C35C),
-              //           shape: RoundedRectangleBorder(
-              //               side: const BorderSide(
-              //                   color: Color(0xFFF9C35C),
-              //                   width: 1,
-              //                   style: BorderStyle.solid),
-              //               borderRadius: BorderRadius.circular(10)),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // const SizedBox(height: 32),
-              // const BuildingRow(),
-              // const BuildingRow(),
-              // const BuildingRow(),
-              const SizedBox(height: 16),
-
-              BlocBuilder<BldgBloc, BldgState>(
-                builder: (context, state) {
-                  if (state is BldgLoadingState) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
-                        child: SizedBox(
-                          height: 30,
-                          // width: 30,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
-                            ),
-                          ),
-                        ),
+              ListView(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(
+                      height: 72,
+                    ),
+                    const Text(
+                      "Buildings",
+                      key: Key("buildingListHeader"),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 36,
                       ),
-                    );
-                  } else if (state is AllBldgLoadedState) {
-                    final allFetchedBldgs = state.fetchedbldgs;
-                    return Flexible(
-                      child: ListView.builder(
-                          key: const Key("bldgListView"),
-                          itemCount: allFetchedBldgs.length,
-                          itemBuilder: (context, index) {
-                            final currBldg = allFetchedBldgs[index];
-                            return BuildingRow(
-                              key: Key('Bldg$index'),
-                              building: currBldg,
-                            );
-                          }),
-                    );
-                  } else if (state is ErrorBldgState) {
-                    return Text(
-                      "Errorrr happened ${state.message}",
-                      style: const TextStyle(color: Colors.white),
-                    );
-                  } else if (state is InitialBldgState) {
-                    BlocProvider.of<BldgBloc>(context)
-                        .add(const GetBuildings());
-                  }
-                  // InitialBldgState
-                  // BldgDetailsLoadedState
-                  // BlocProvider.of<BldgBloc>(context).add(const GetBuildings());
-                  return const Text("");
-                },
-              ),
+                    ),
+                    // const SizedBox(
+                    //   height: 16,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     TextButton(
+                    //       onPressed: () {
+                    //         Navigator.of(context).pushNamed(
+                    //           ChangePassword.routeName,
+                    //         );
+                    //       },
+                    //       child: const Padding(
+                    //         padding:
+                    //             EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    //         child: Text(
+                    //           // 'Manage Categories',
+                    //           'Change password',
+                    //           style: TextStyle(
+                    //             fontSize: 14,
+                    //             fontWeight: FontWeight.w700,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       // textColor: Colors.white,
+                    //       style: TextButton.styleFrom(
+                    //         primary: const Color(0xFFF9C35C),
+                    //         shape: RoundedRectangleBorder(
+                    //             side: const BorderSide(
+                    //                 color: Color(0xFFF9C35C),
+                    //                 width: 1,
+                    //                 style: BorderStyle.solid),
+                    //             borderRadius: BorderRadius.circular(10)),
+                    //       ),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                    //       child: TextButton(
+                    //         onPressed: () {
+                    //           Navigator.of(context).pushNamed(
+                    //             AddAdminPage.routeName,
+                    //           );
+                    //         },
+                    //         child: const Padding(
+                    //           padding:
+                    //               EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    //           child: Text(
+                    //             'Add Admin',
+                    //             style: TextStyle(
+                    //               fontSize: 14,
+                    //               fontWeight: FontWeight.w700,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         // textColor: Colors.white,
+                    //         style: TextButton.styleFrom(
+                    //           primary: const Color(0xFFF9C35C),
+                    //           shape: RoundedRectangleBorder(
+                    //               side: const BorderSide(
+                    //                   color: Color(0xFFF9C35C),
+                    //                   width: 1,
+                    //                   style: BorderStyle.solid),
+                    //               borderRadius: BorderRadius.circular(10)),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 32),
+                    // const BuildingRow(),
+                    // const BuildingRow(),
+                    // const BuildingRow(),
+                    const SizedBox(height: 16),
 
-              BlocBuilder<BldgBloc, BldgState>(
-                builder: (context, state) {
-                  if (state is ErrorBldgState) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color(0xFFF9C35C),
-                          fixedSize: const Size(243, 41),
-                        ),
-                        onPressed: () {
+                    BlocBuilder<BldgBloc, BldgState>(
+                      builder: (context, state) {
+                        if (state is BldgLoadingState) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                              child: SizedBox(
+                                height: 30,
+                                // width: 30,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        } else if (state is AllBldgLoadedState) {
+                          final allFetchedBldgs = state.fetchedbldgs;
+                          return Flexible(
+                            child: ListView.builder(
+                                key: const Key("bldgListView"),
+                                itemCount: allFetchedBldgs.length,
+                                itemBuilder: (context, index) {
+                                  final currBldg = allFetchedBldgs[index];
+                                  return BuildingRow(
+                                    key: Key('Bldg$index'),
+                                    building: currBldg,
+                                  );
+                                }),
+                          );
+                        } else if (state is ErrorBldgState) {
+                          return Text(
+                            "Errorrr happened ${state.message}",
+                            style: const TextStyle(color: Colors.white),
+                          );
+                        } else if (state is InitialBldgState) {
                           BlocProvider.of<BldgBloc>(context)
                               .add(const GetBuildings());
-                        },
-                        child: const Text(
-                          "Try again",
-                          style: TextStyle(
-                            color: Color(0xFF1A1820),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  return const Text("");
-                },
+                        }
+                        // InitialBldgState
+                        // BldgDetailsLoadedState
+                        // BlocProvider.of<BldgBloc>(context).add(const GetBuildings());
+                        return const Text("");
+                      },
+                    ),
+
+                    BlocBuilder<BldgBloc, BldgState>(
+                      builder: (context, state) {
+                        if (state is ErrorBldgState) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: const Color(0xFFF9C35C),
+                                fixedSize: const Size(243, 41),
+                              ),
+                              onPressed: () {
+                                BlocProvider.of<BldgBloc>(context)
+                                    .add(const GetBuildings());
+                              },
+                              child: const Text(
+                                "Try again",
+                                style: TextStyle(
+                                  color: Color(0xFF1A1820),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return const Text("");
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
