@@ -55,7 +55,12 @@ class CategoriesDataProvider {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to delete category.');
+      if (response.statusCode == 409) {
+        // throw Exception('Category selected being used');
+        throw Exception('${jsonDecode(response.body)["message"].toString()}');
+      } else {
+        throw Exception('Failed to delete category.');
+      }
     }
   }
 

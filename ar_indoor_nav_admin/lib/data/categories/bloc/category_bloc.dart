@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ar_indoor_nav_admin/data/account/account.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ar_indoor_nav_admin/data/categories/repository/categories_repository.dart';
@@ -62,6 +64,15 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
         final categoriesList =
             await categoriesRepository.getCategories(bldgId: event.bldgId);
         yield CategoriesLoadSuccess(categoriesList);
+      } on SocketException catch (e) {
+        yield const CategoriesOperationError(message: "Connection issues");
+      } on Exception catch (e) {
+        yield const CategoriesOperationError(
+            message: "Category selected being used");
+        // yield CategoriesOperationError(
+        //     message: "${e.toString().substring(11)}");
+        // yield const CategoriesOperationError(
+        //     message: "failed to delete category!");
       } catch (_) {
         yield const CategoriesOperationError(
             message: "failed to delete category!");
