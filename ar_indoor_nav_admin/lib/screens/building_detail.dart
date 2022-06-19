@@ -115,9 +115,30 @@ class BuildingDetail extends StatelessWidget {
                             );
                           } else if (state is ErrorBldgDetailState) {
                             return const Text(
-                              "error loading detailss ? ",
+                              "error loading details. Swipe to refresh.",
                               style: TextStyle(color: Colors.white),
                             );
+                            // return Padding(
+                            //   padding:
+                            //       const EdgeInsets.symmetric(horizontal: 40),
+                            //   child: ElevatedButton(
+                            //     style: ElevatedButton.styleFrom(
+                            //       primary: const Color(0xFFF9C35C),
+                            //       fixedSize: const Size(243, 41),
+                            //     ),
+                            //     onPressed: () {
+                            //       BlocProvider.of<BldgDetailBloc>(context).add(
+                            //         GetBuildingDetails(id: bldgId),
+                            //       );
+                            //     },
+                            //     child: const Text(
+                            //       "Reload",
+                            //       style: TextStyle(
+                            //         color: Color(0xFF1A1820),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // );
                           } else if (state is BldgDetailLoadingState) {
                             return const Center(
                               child: Padding(
