@@ -7,7 +7,8 @@ void main() {
   group('App test', () {
     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-    // testWidgets('TS05 TS01', (tester) async {
+    // testWidgets('TS05 TS01: Check login with valid email and valid password',
+    //     (tester) async {
     //   app.main();
     //   await tester.pumpAndSettle();
 
@@ -17,7 +18,7 @@ void main() {
 
     //   await tester.pumpAndSettle();
     //   await tester.enterText(emailField, 'abe@gmail.com');
-    //   await tester.enterText(passwordField, '12345');
+    //   await tester.enterText(passwordField, '12345678Aa!');
 
     //   // await tester.pumpAndSettle();
 
@@ -74,7 +75,7 @@ void main() {
     // });
 
     // testWidgets('TS05 TC03', (tester) async {
-    //   const String errorMessageSnackBar = "some error happened while logging";
+    //   const String errorMessageSnackBar = "incorrect email or password";
 
     //   app.main();
     //   await tester.pumpAndSettle();
@@ -171,7 +172,7 @@ void main() {
     // });
 
     // testWidgets('TS05 TC06', (tester) async {
-    //   const String errorMessageSnackBar = "some error happened while logging";
+    //   const String errorMessageSnackBar = "incorrect email or password";
 
     //   app.main();
     //   await tester.pumpAndSettle();
