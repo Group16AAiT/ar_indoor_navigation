@@ -27,6 +27,7 @@ class Category extends StatelessWidget {
             return Center(
               //margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
               child: ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
                   key: const Key("categoryListView"),
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
