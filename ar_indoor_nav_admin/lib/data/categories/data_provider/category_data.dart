@@ -55,7 +55,7 @@ class CategoriesDataProvider {
     );
 
     if (response.statusCode != 200) {
-      if (response.statusCode == 409) {
+      if (response.statusCode == 409 || response.statusCode == 403) {
         // throw Exception('Category selected being used');
         throw Exception('${jsonDecode(response.body)["message"].toString()}');
       } else {

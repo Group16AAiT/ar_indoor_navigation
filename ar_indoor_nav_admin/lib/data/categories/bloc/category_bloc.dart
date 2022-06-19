@@ -67,10 +67,10 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
       } on SocketException catch (e) {
         yield const CategoriesOperationError(message: "Connection issues");
       } on Exception catch (e) {
-        yield const CategoriesOperationError(
-            message: "Category selected being used");
-        // yield CategoriesOperationError(
-        //     message: "${e.toString().substring(11)}");
+        // yield const CategoriesOperationError(
+        //     message: "Category selected being used");
+        yield CategoriesOperationError(
+            message: "${e.toString().substring(11)}");
         // yield const CategoriesOperationError(
         //     message: "failed to delete category!");
       } catch (_) {
