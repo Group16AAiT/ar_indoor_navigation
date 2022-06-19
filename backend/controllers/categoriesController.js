@@ -3,6 +3,9 @@ var router = express.Router();
 Categories = require('../models/categoriesModel');
 authMiddleware = require('../middlewares/auth');
 var ObjectId = require('mongoose').Types.ObjectId;
+const jwt = require('jsonwebtoken');
+const config = require('../config');
+
 
 router.get('/', async (req, res, next) => {
     try {
@@ -34,6 +37,28 @@ router.get('/', async (req, res, next) => {
 router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
         const bldgId = res.locals.bldgId;
+        // console.log({"aaa": req.headers.authorization.split(' ')[1]});
+        const token = req.headers.authorization.split(' ')[1];
+        // console.log("bbb");
+        const decoded = jwt.verify(token, config.secret)
+        // const user = await User.findById(decoded.id)
+        
+        // var fetchedBuilding = await Building.findById(req.body.bldgId).lean();
+        var fetchedBuilding = await Building.findById(bldgId);
+        console.log({fetchedBuilding: fetchedBuilding});
+        var temp = fetchedBuilding.toObject();
+        // console.log({"temp ": temp});
+        fetchedBuilding = temp;
+        const allowedBldgManagers = fetchedBuilding.managers;
+        if (!(allowedBldgManagers.includes(decoded.id))) {
+            // console.log("x");
+            return res.status(403).json({
+                message: 'Failed to add category. Insufficient permission for user.',
+                error: true
+            });
+        }else {
+            // console.log("ww");
+        }
         var existingCategory = await Categories.findOne({name: req.body.name, bldgId: bldgId});
         if (existingCategory) {
             return res.status(409).json({
@@ -54,6 +79,7 @@ router.post('/',  authMiddleware.isAuthenticated, async (req, res, next) => {
         })
 
     } catch (e) {
+        console.log(e);
         res.status(500).json({
             status: 'err',
             code: 500,
@@ -116,6 +142,29 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id',  authMiddleware.isAuthenticated, async (req, res, next) => {
     try {
+        const bldgId = res.locals.bldgId;
+        // console.log({"aaa": req.headers.authorization.split(' ')[1]});
+        const token = req.headers.authorization.split(' ')[1];
+        // console.log("bbb");
+        const decoded = jwt.verify(token, config.secret)
+        // const user = await User.findById(decoded.id)
+        
+        // var fetchedBuilding = await Building.findById(req.body.bldgId).lean();
+        var fetchedBuilding = await Building.findById(bldgId);
+        console.log({fetchedBuilding: fetchedBuilding});
+        var temp = fetchedBuilding.toObject();
+        // console.log({"temp ": temp});
+        fetchedBuilding = temp;
+        const allowedBldgManagers = fetchedBuilding.managers;
+        if (!(allowedBldgManagers.includes(decoded.id))) {
+            // console.log("x");
+            return res.status(403).json({
+                message: 'Failed to delete category. Insufficient permission for user.',
+                error: true
+            });
+        }else {
+            // console.log("ww");
+        }
         var roomListRes = await Rooms.find({category: req.params.id});
         // console.log({roomssFound: roomListRes});
         if(roomListRes.length > 0) {
