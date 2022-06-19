@@ -103,7 +103,6 @@ class _AddCategoryState extends State<AddCategory> {
                                       return null;
                                     },
                                     decoration: const InputDecoration(
-
                                         // labelText: 'Category name'
                                         ),
                                     onSaved: (value) {
@@ -113,37 +112,6 @@ class _AddCategoryState extends State<AddCategory> {
                                     }),
                               ),
                               const SizedBox(height: 14),
-                              // const Align(
-                              //   alignment: Alignment.topLeft,
-                              //   child: Padding(
-                              //     padding: EdgeInsets.only(left: 5.0),
-                              //     child: Text(
-                              //       "Category Detail",
-                              //       style: TextStyle(
-                              //         fontSize: 14,
-                              //         color: Colors.white,
-                              //         fontWeight: FontWeight.bold,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              // const SizedBox(height: 8),
-                              // Container(
-                              //   padding:
-                              //       const EdgeInsets.symmetric(horizontal: 20),
-                              //   decoration: BoxDecoration(
-                              //     color: const Color(0x1AC4C4C4),
-                              //     borderRadius: BorderRadius.circular(8),
-                              //   ),
-                              //   child: TextFormField(
-                              //     initialValue: '',
-                              //     style: const TextStyle(color: Colors.white),
-                              //     decoration: const InputDecoration(
-                              //       // hintText: 'Password',
-                              //       border: InputBorder.none,
-                              //     ),
-                              //   ),
-                              // ),
                             ]),
                       ),
                       const SizedBox(height: 20),

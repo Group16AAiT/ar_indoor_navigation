@@ -96,80 +96,7 @@ class _BuildingListState extends State<BuildingList> {
                         fontSize: 36,
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 16,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     TextButton(
-                    //       onPressed: () {
-                    //         Navigator.of(context).pushNamed(
-                    //           ChangePassword.routeName,
-                    //         );
-                    //       },
-                    //       child: const Padding(
-                    //         padding:
-                    //             EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    //         child: Text(
-                    //           // 'Manage Categories',
-                    //           'Change password',
-                    //           style: TextStyle(
-                    //             fontSize: 14,
-                    //             fontWeight: FontWeight.w700,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       // textColor: Colors.white,
-                    //       style: TextButton.styleFrom(
-                    //         primary: const Color(0xFFF9C35C),
-                    //         shape: RoundedRectangleBorder(
-                    //             side: const BorderSide(
-                    //                 color: Color(0xFFF9C35C),
-                    //                 width: 1,
-                    //                 style: BorderStyle.solid),
-                    //             borderRadius: BorderRadius.circular(10)),
-                    //       ),
-                    //     ),
-                    //     Padding(
-                    //       padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                    //       child: TextButton(
-                    //         onPressed: () {
-                    //           Navigator.of(context).pushNamed(
-                    //             AddAdminPage.routeName,
-                    //           );
-                    //         },
-                    //         child: const Padding(
-                    //           padding:
-                    //               EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    //           child: Text(
-                    //             'Add Admin',
-                    //             style: TextStyle(
-                    //               fontSize: 14,
-                    //               fontWeight: FontWeight.w700,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         // textColor: Colors.white,
-                    //         style: TextButton.styleFrom(
-                    //           primary: const Color(0xFFF9C35C),
-                    //           shape: RoundedRectangleBorder(
-                    //               side: const BorderSide(
-                    //                   color: Color(0xFFF9C35C),
-                    //                   width: 1,
-                    //                   style: BorderStyle.solid),
-                    //               borderRadius: BorderRadius.circular(10)),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    // const SizedBox(height: 32),
-                    // const BuildingRow(),
-                    // const BuildingRow(),
-                    // const BuildingRow(),
                     const SizedBox(height: 16),
-
                     BlocBuilder<BldgBloc, BldgState>(
                       builder: (context, state) {
                         if (state is BldgLoadingState) {
@@ -216,7 +143,6 @@ class _BuildingListState extends State<BuildingList> {
                         return const Text("");
                       },
                     ),
-
                     BlocBuilder<BldgBloc, BldgState>(
                       builder: (context, state) {
                         if (state is ErrorBldgState) {
