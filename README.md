@@ -39,8 +39,10 @@ The Building Manager app is a utility mobile application developed for the build
 #### Project setup
 * Open terminal and cd into the project directory (ar_indoor_navigation). This is the building manager app repo
 * cd into "ar_indoor_nav_admin" folder. This is the subfolder for the mobile application.
-* Run "flutter pub get" to download all the dependencies
-* Run "flutter run" to run the application
+* (For terminal) Run "flutter pub get" to download all the dependencies
+* (For terminal) Run "flutter run" to run the application
+* (For vscode) Choose device ![alt text](https://github.com/Group16AAiT/ar_indoor_navigation/blob/main/screenshots/Screenshot1.jpg) 
+* (For vscode) Run -> Run Without Debugging. Alternatives Run -> Start Debugging ![alt text](https://github.com/Group16AAiT/ar_indoor_navigation/blob/main/screenshots/Screenshot2.jpg)
 
 
 ## References
